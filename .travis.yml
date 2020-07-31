@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - openjdk12
+script:
+  - gradle build -x test
+sudo: required
+
+before_install:
+    - chmod +x gradlew
+
+script:
+    - ./gradlew clean build -i --continue
