@@ -1,4 +1,4 @@
-package ru.kitosins.sibsutis.repository;
+package ru.kitosins.sibsutis.currency.repository;
 
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
