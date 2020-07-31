@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.kitosins.sibsutis.currency.entity.Currency;
 
 @Repository
-public interface CurrencyRepository extends CassandraRepository<Long, Currency> {
+public interface CurrencyRepository extends CassandraRepository<Currency, Long> {
 }
