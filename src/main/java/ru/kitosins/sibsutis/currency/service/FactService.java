@@ -20,4 +20,8 @@ public class FactService {
     public List<Fact> findAll() {
         return factRepository.findAll();
     }
+
+    public List<String> findByNameCurrency(String nameCurrency) {
+        return factRepository.findByNameCurrency(nameCurrency);
+    }
 }
