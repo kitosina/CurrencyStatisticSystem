@@ -3,6 +3,7 @@ package ru.kitosins.sibsutis.currency.repository;
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import ru.kitosins.sibsutis.currency.entity.Currency;
@@ -20,6 +21,10 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
     @Query("select MAX(id) FROM currency ALLOW FILTERING")
     Long findMaxId();
 
-    //добавить запрос на диапазон дат и валюты.
+    @AllowFiltering
+    //findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency
+    List<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
+            String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency);
+
 
 }
