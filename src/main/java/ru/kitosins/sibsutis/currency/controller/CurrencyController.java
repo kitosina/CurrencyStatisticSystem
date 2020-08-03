@@ -4,10 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kitosins.sibsutis.currency.entity.Currency;
 import ru.kitosins.sibsutis.currency.service.CurrencyService;
 
-@RestController
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
 @Slf4j
+@RestController
 @RequestMapping("/currency")
 public class CurrencyController {
 
@@ -18,10 +23,26 @@ public class CurrencyController {
         this.currencyService = currencyService;
     }
 
-    @GetMapping("/{symbols}/{base}")
+    ///currency/RUB/EUR пример запросса 1 EUR=84 RUB
+    @PostMapping("update/{symbols}/{base}")
     public ResponseEntity update(@PathVariable String symbols, @PathVariable String base) {
-        log.warn(currencyService.update(symbols, base).toString());
-        return currencyService.update(symbols, base);
+        return Objects.isNull(currencyService.update(symbols, base))
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok().build();
     }
+
+    //localhost:8080/currency/range/2020-08-00/2020-08-03/RUB/USD
+    @GetMapping("range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}")
+    public ResponseEntity findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency(
+            @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String quotedTitleCurrency, @PathVariable String basicTitleCurrency) {
+        return currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency).isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
+                        dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency));
+
+    }
+
+
+
 
 }
