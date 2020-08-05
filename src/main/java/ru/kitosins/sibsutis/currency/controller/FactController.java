@@ -1,5 +1,6 @@
 package ru.kitosins.sibsutis.currency.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,11 @@ public class FactController {
     @Autowired
     public FactController(FactService factService) {
         this.factService = factService;
+    }
+
+    @PostMapping
+    public ResponseEntity save(@RequestBody Fact fact) {
+        return ResponseEntity.ok(factService.save(fact));
     }
 
     @GetMapping

@@ -24,10 +24,6 @@ public class CurrencyService implements CurrencyUpdatable {
         this.currencyRepository = currencyRepository;
     }
 
-    public Currency save(Currency currency) {
-        return currencyRepository.save(currency);
-    }
-
     public List<Currency> findAll() {
         return currencyRepository.findAll();
     }
@@ -54,6 +50,7 @@ public class CurrencyService implements CurrencyUpdatable {
                 : null;
     }
 
+    //code style check
     public List<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
             String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency) {
 

@@ -31,11 +31,19 @@ public class CurrencyController {
                 : ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity findAll() {
+        return ResponseEntity.ok(currencyService.findAll());
+    }
+
     //localhost:8080/currency/range/2020-08-00/2020-08-03/RUB/USD
+    //code style check
     @GetMapping("range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}")
     public ResponseEntity findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency(
             @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String quotedTitleCurrency, @PathVariable String basicTitleCurrency) {
-        return currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency).isEmpty()
+
+        return currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
+                dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency).isEmpty()
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
                         dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency));

@@ -6,6 +6,8 @@ import ru.kitosins.sibsutis.currency.entity.Fact;
 import ru.kitosins.sibsutis.currency.repository.FactRepository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class FactService {
@@ -21,7 +23,11 @@ public class FactService {
         return factRepository.findAll();
     }
 
-    public List<String> findByNameCurrency(String nameCurrency) {
+    public Fact save(Fact fact) {
+        return factRepository.save(fact);
+    }
+
+    public Fact findByNameCurrency(String nameCurrency) {
         return factRepository.findByNameCurrency(nameCurrency);
     }
 }

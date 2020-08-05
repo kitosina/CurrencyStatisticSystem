@@ -22,7 +22,7 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
     Long findMaxId();
 
     @AllowFiltering
-    //findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency
+    //code style check
     List<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
             String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency);
 
