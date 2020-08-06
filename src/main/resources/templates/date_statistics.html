@@ -14,11 +14,18 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.2/Chart.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+
+    <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
 <!-- style -->
-<link rel="stylesheet" href="style/data static.css">
+<link rel="stylesheet" href="style/date_statistics.css">
+
 </head>
-<body>
+
+<body ng-app="DATE_STATISTICS" ng-controller="DATE_CONTROLLER">
 	
 <!-- Шапка -->
 <header class="header">
@@ -58,22 +65,25 @@
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-6">
-			<canvas height="180" style="position: relative; background-color: #FFFFFF;" id="myChart"></canvas>
+<!--			<canvas height="180" style="position: relative; background-color: #FFFFFF;" id="myChart"></canvas>-->
+            <div style="height: 500px; background-color: #FFFFFF" id="chartdiv"></div>
 		</div>
 		<div class="col-md-4">
-			<h2 style="color: #FFFFFF">Start Date <input type="date" class="form-control" id="date1" name="date" placeholder="Дата" required></h2>
-			<h2 style="color: #FFFFFF">Final Date <input type="date" class="form-control" id="date2" name="date" placeholder="Дата" required></h2>
+			<h2 style="color: #FFFFFF">Start Date
+				<input ng-model="paramRequest.dateAfter" type="date" class="form-control" id="date1" name="date" placeholder="Дата" required></h2>
+			<h2 style="color: #FFFFFF">Final Date
+				<input ng-model="paramRequest.dateBefore" type="date" class="form-control" id="date2" name="date" placeholder="Дата" required></h2>
 			<div>
 				<h2 style="color: #FFFFFF">Currency</h2>
-				<select class="custom-select" id="inputGroupSelect01">
-				   <option selected>Currency</option>
-				   <option value="1">USD/RUB</option>
-				   <option value="2">EUR/USD</option>
-				   <option value="3">EUR/RUB</option>
+				<select class="custom-select" id="inputGroupSelect01" ng-model="paramRequest.currencyCouple">
+				   <option disabled selected value="">Choose currency</option>
+				   <option value="RUB/USD">USD/RUB</option>
+				   <option value="USD/EUR">EUR/USD</option>
+				   <option value="RUB/EUR">EUR/RUB</option>
 				</select>
 			</div>
 			<br>
-			<button type="button" class="btn btn-warning btn-lg btn-block">Analysis</button>
+			<button ng-click="analysisGlobalData()" type="button" class="btn btn-warning btn-lg btn-block">Analysis</button>
 		</div>
 	</div>
 </div>
@@ -95,6 +105,6 @@
 	</div>
 </footer>
 
-<script src="script/data static.js" type="text/javascript"></script>
+<script src="script/date_statistics.js" type="text/javascript"></script>
 </body>
 </html>

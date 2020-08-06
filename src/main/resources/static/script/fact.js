@@ -4,13 +4,14 @@ app.controller("FACT_CONTROLLER",function($scope, $http){
 
     $scope.nameCurrency = "";
     $scope.listFact = [];
+    $scope.url = "/fact/";
 
     $scope.selectCurrency = function () {
         console.log($scope.nameCurrency);
         if ($scope.nameCurrency!=="") {
-            var url = "/fact/" + $scope.nameCurrency;
+            var urlRequest = $scope.url + $scope.nameCurrency;
             $http({
-                url: url,
+                url: urlRequest,
                 method: "GET"
             }).then(function (response) {
                 $scope.listFact = response.data.listFact;
