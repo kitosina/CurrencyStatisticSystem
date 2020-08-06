@@ -24,7 +24,7 @@ public class CurrencyController {
     }
 
     ///currency/RUB/EUR пример запросса 1 EUR=84 RUB
-    @PostMapping("update/{symbols}/{base}")
+    @PostMapping("/update/{symbols}/{base}")
     public ResponseEntity update(@PathVariable String symbols, @PathVariable String base) {
         return Objects.isNull(currencyService.update(symbols, base))
                 ? ResponseEntity.noContent().build()
@@ -38,7 +38,7 @@ public class CurrencyController {
 
     //localhost:8080/currency/range/2020-08-00/2020-08-03/RUB/USD
     //code style check
-    @GetMapping("range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}")
+    @GetMapping("/range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}")
     public ResponseEntity findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency(
             @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String quotedTitleCurrency, @PathVariable String basicTitleCurrency) {
 
