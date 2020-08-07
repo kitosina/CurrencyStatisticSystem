@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("currency")
-public class Currency {
+public class Currency implements Comparable<Currency>{
 
     @Id
     @PrimaryKeyColumn(
@@ -42,6 +42,10 @@ public class Currency {
     @Column
     private Double value;
 
+    @Override
+    public int compareTo(Currency currency) {
+            return date.compareTo(currency.getDate());
+    }
 }
 
 

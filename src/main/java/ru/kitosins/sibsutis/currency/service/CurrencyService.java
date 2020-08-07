@@ -51,11 +51,12 @@ public class CurrencyService implements CurrencyUpdatable {
     }
 
     //code style check
-    public List<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
+    public TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
             String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency) {
 
         String dateAfterFromTime = dateAfter.concat(" 00:00:00+0000");
         String dateBeforeFromTime = dateBefore.concat(" 00:00:00+0000");
+        TreeSet<Currency> set = new TreeSet<>();
         return currencyRepository.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
                 dateAfterFromTime, dateBeforeFromTime, quotedTitleCurrency, basicTitleCurrency);
     }

@@ -11,6 +11,7 @@ import ru.kitosins.sibsutis.currency.entity.Currency;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
 
 @Repository
 public interface CurrencyRepository extends CassandraRepository<Currency, Long> {
@@ -23,8 +24,7 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
 
     @AllowFiltering
     //code style check
-    List<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
+    TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
             String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency);
-
 
 }
