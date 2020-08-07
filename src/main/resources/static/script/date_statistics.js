@@ -23,7 +23,6 @@ app.controller("DATE_CONTROLLER",function($scope, $http){
             }).then(function (response) {
                 console.log(response.data);
                 this.graphics(response.data);
-
             })
         } else alert("Please input currency!");
     }
@@ -51,206 +50,92 @@ function validateDate(date) {
 }
 
 function graphics(data) {
-    // var chart = am4core.create(
-    //     document.getElementById("chartdiv"),
-    //     am4charts.XYChart
-    // );
 
-    // var chartData = []
-    // var labels = []
-    // var values = []
-    // if (data === undefined) {
-    //     values = [63.56, 64.98, 73, 63.56, 64.98, 73, 63.56, 64.98, 73]
-    //     labels = ['21.08.2018', '22.08.2018', '23.08.2018', '21.08.2018', '22.08.2018', '23.08.2018', '21.08.2018', '22.08.2018', '23.08.2018']
-    //     for (var i = 0; i < values.length; i++) {
-    //         chartData.push({
-    //             date: labels[i],
-    //             value: values[i]
-    //         })
-    //     }
-    // } else {
-    //     for (var i = 0; i < data.length; i++) {
-    //         labels.push(data[i].date.slice(0, 10))
-    //         values.push(data[i].value)
-    //
-    //         chartData.push({
-    //             date: data[i].date.slice(0, 10),
-    //             value: data[i].value
-    //         })
-    //     }
-    // }
-    // chart.data = chartData
-    // chart.data = [{
-    //     "country": "Lithuania",
-    //     "litres": 501
-    // }, {
-    //     "country": "Czechia",
-    //     "litres": 301
-    // }, {
-    //     "country": "Ireland",
-    //     "litres": 201
-    // }, {
-    //     "country": "Germany",
-    //     "litres": 165
-    // }, {
-    //     "country": "Australia",
-    //     "litres": 139
-    // }, {
-    //     "country": "Austria",
-    //     "litres": 128
-    // }, {
-    //     "country": "UK",
-    //     "litres": 99
-    // }, {
-    //     "country": "Belgium",
-    //     "litres": 60
-    // }, {
-    //     "country": "The Netherlands",
-    //     "litres": 50
-    // }];
-    // var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    // categoryAxis.dataFields.category = "country";
-    // var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    // categoryAxis.dataFields.category = "country";
-    // categoryAxis.title.text = "Countries";
-    //
-    // var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis.title.text = "Litres sold (M)";
-    //
-    // var series = chart.series.push(new am4charts.ColumnSeries());
-    // series.name = "Sales";
-    // series.columns.template.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
-    // series.columns.template.fill = am4core.color("#104547"); // fill
-    // series.dataFields.valueY = "litres";
-    // series.dataFields.categoryX = "country";
-
-    // var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    // var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // var series = chart.series.push(new am4charts.LineSeries());
-    // series.dataFields.dateX = "date";
-    // series.dataFields.valueY = "value";
-    // chart.cursor = new am4charts.XYCursor();
-    //
-    // var scrollbarX = new am4charts.XYChartScrollbar();
-    // scrollbarX.series.push(series);
-    // chart.scrollbarX = scrollbarX;
-
-
-    // var ctx = document.getElementById('myChart').getContext('2d');
-    // var chart = new Chart(ctx, {
-    //     // The type of chart we want to create
-    //     type: 'line',
-    //     color: 'red',
-    //     borderWidth: 30,
-    //     // The data for our dataset
-    //     data: {
-    //         labels: labels,
-    //         datasets: [{
-    //             label: 'My First dataset',
-    //             borderColor: '#00CED1',
-    //             data: values
-    //         }]
-    //     },
-    //
-    //     // Configuration options go here
-    //     options: {
-    //         display: true,
-    //         scales: {
-    //             gridLines: {
-    //                 show: true,
-    //                 color: "red",
-    //             },
-    //         }
-    //     }
-
-    // });
-
-
-
-    // Use themes
-    am4core.useTheme(am4themes_animated);
+// Themes begin
+        am4core.useTheme(am4themes_animated);
+// Themes end
 
 // Create chart instance
-    var chart = am4core.create("chartdiv", am4charts.XYChart);
-    var colorSet = new am4core.ColorSet("red");
-    chart.paddingRight = 20;
+        var chart = am4core.create("chartdiv", am4charts.XYChart);
 
 // Add data
-    chart.data = [{
-        "date": new Date(2018, 3, 20),
-        "value": 90,
-    }, {
-        "date": new Date(2018, 3, 21),
-        "value": 102,
-    }, {
-        "date": new Date(2018, 3, 22),
-        "value": 123,
-    }, {
-        "date": new Date(2018, 3, 23),
-        "value": 190,
-    }, {
-        "date": new Date(2018, 3, 24),
-        "value": 55,
-    }, {
-        "date": new Date(2018, 3, 25),
-        "value": 81,
-    }, {
-        "date": new Date(2018, 3, 26),
-        "value": 123,
-    }, {
-        "date": new Date(2018, 3, 27),
-        "value": 63,
-    }, {
-        "date": new Date(2018, 3, 28),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 3, 29),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 3, 30),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 3, 31),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 4, 1),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 4, 2),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 4, 3),
-        "value": 113,
-    }, {
-        "date": new Date(2018, 4, 4),
-        "value": 113,
-    }];
+        chart.data = [];
 
+
+// Set input format for the dates
+        chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+
+        var labels = []
+        var values = []
+        if (data === undefined) {
+            values = [63.56, 64.98, 73, 63.56, 64.98, 73, 63.56, 64.98, 73]
+            labels = ['21.08.2018', '22.08.2018', '23.08.2018', '21.08.2018', '22.08.2018', '23.08.2018', '21.08.2018', '22.08.2018', '23.08.2018']
+            for (var i = 0; i < values.length; i++) {
+                chart.data.push({
+                    date: labels[i],
+                    value: values[i]
+                })
+            }
+        } else {
+            for (var i = 0; i < data.length; i++) {
+                chart.data.push(data[i].date.slice(0, 10))
+                chart.data.push(data[i].value)
+
+                chart.data.push({
+                    date: data[i].date.slice(0, 10),
+                    value: data[i].value
+                })
+            }
+        }
+        console.log("data full" +  chart.data.sort());
 // Create axes
-    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.renderer.minGridDistance = 50;
-    dateAxis.renderer.grid.template.location = 0.5;
-    dateAxis.startLocation = 0.5;
-    dateAxis.endLocation = 0.5;
-
-// Create value axis
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
 // Create series
-    var series1 = chart.series.push(new am4charts.LineSeries());
-    series1.dataFields.valueY = "value";
-    series1.dataFields.dateX = "date";
-    series1.strokeWidth = 3;
-    series1.tensionX = 0.8;
-    series1.bullets.push(new am4charts.CircleBullet());
-    series1.connect = false;
-    series1.fill = am4core.color("green");
-    series1.stroke = am4core.color("red");
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "{value}"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
 
-    var scrollbarX = new am4charts.XYChartScrollbar();
-    scrollbarX.series.push(series1);
-    chart.scrollbarX = scrollbarX;
+// Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
+
+// Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
+
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
+
+// Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
+
+// Create vertical scrollbar and place it before the value axis
+        chart.scrollbarY = new am4core.Scrollbar();
+        chart.scrollbarY.parent = chart.leftAxesContainer;
+        chart.scrollbarY.toBack();
+
+// Create a horizontal scrollbar with previe and place it underneath the date axis
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+        dateAxis.start = 0.79;
+        dateAxis.keepSelection = true;
 }
 
 
