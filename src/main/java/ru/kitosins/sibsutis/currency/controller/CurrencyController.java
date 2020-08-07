@@ -4,11 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kitosins.sibsutis.currency.entity.Currency;
+import ru.kitosins.sibsutis.currency.api.entity.ApiAnswer;
+import ru.kitosins.sibsutis.currency.api.entity.ParamRequestUpdateDateClient;
 import ru.kitosins.sibsutis.currency.service.CurrencyService;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -24,9 +23,16 @@ public class CurrencyController {
     }
 
     ///currency/RUB/EUR пример запросса 1 EUR=84 RUB
-    @PostMapping("/update/{symbols}/{base}")
+    @PostMapping("/updateLast/{symbols}/{base}")
     public ResponseEntity update(@PathVariable String symbols, @PathVariable String base) {
-        return Objects.isNull(currencyService.update(symbols, base))
+        return Objects.isNull(currencyService.update2(symbols, base))
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestBody ParamRequestUpdateDateClient paramRequestUpdateDateClient) {
+        return Objects.isNull(currencyService.update(paramRequestUpdateDateClient))
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok().build();
     }
