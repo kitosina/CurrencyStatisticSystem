@@ -8,6 +8,9 @@ import ru.kitosins.sibsutis.currency.api.entity.ApiAnswer;
 import ru.kitosins.sibsutis.currency.api.entity.ParamRequestUpdateDateClient;
 import ru.kitosins.sibsutis.currency.service.CurrencyService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 @Slf4j
@@ -54,6 +57,13 @@ public class CurrencyController {
                 : ResponseEntity.ok(currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
                         dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency));
 
+    }
+
+    @GetMapping("/converter/{quotedTitleCurrency}/{basicTitleCurrency}/{valueInput}")
+    public ResponseEntity converter(@PathVariable String quotedTitleCurrency, @PathVariable String basicTitleCurrency, @PathVariable Double valueInput) throws ParseException {
+        Date date = currencyService.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+        Double actualValue = currencyService.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency).getValue();
+        return ResponseEntity.ok(actualValue * valueInput);
     }
 
 

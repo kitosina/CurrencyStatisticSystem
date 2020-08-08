@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="style/converter.css">
 
 </head>
-<body>
+<body ng-app="CONVERTER" ng-controller="FACT_CONVERTER">
 
 
 <!-- Шапка -->
@@ -78,7 +78,7 @@
 		</div>
 		<div class="col-md-3">
 			<select class="custom-select" id="inputGroupSelect01">
-			    <option selected>Currency basic</option>
+			    <option selected ng-model="">Currency basic</option>
 			    <option value="1">EUR</option>
 			    <option value="2">USD</option>
 			    <option value="3">RUB</option>

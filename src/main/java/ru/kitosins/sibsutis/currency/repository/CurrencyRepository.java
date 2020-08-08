@@ -22,7 +22,7 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
     @Query("select MAX(id) FROM currency ALLOW FILTERING")
     Long findMaxId();
 
-    @Query("select MAX(date) FROM currency WHERE basicTitleCurrency = ?0 AND quotedTitleCurrency =?1 ALLOW FILTERING")
+    @Query("select MAX(date) FROM currency WHERE basicTitleCurrency = ?0 AND quotedTitleCurrency = ?1 ALLOW FILTERING")
     Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency);
 
     @AllowFiltering
