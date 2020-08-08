@@ -26,7 +26,6 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
     Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency);
 
     @AllowFiltering
-    //code style check
     TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
             String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency);
 

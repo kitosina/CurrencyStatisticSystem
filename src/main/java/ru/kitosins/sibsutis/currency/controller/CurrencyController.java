@@ -22,13 +22,13 @@ public class CurrencyController {
         this.currencyService = currencyService;
     }
 
-    ///currency/RUB/EUR пример запросса 1 EUR=84 RUB
-    @PostMapping("/updateLast/{symbols}/{base}")
-    public ResponseEntity update(@PathVariable String symbols, @PathVariable String base) {
-        return Objects.isNull(currencyService.update2(symbols, base))
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok().build();
-    }
+    //currency/RUB/EUR пример запросса 1 EUR=84 RUB
+//    @PostMapping("/updateLast/{symbols}/{base}")
+//    public ResponseEntity update(@PathVariable String symbols, @PathVariable String base) {
+//        return Objects.isNull(currencyService.update2(symbols, base))
+//                ? ResponseEntity.noContent().build()
+//                : ResponseEntity.ok().build();
+//    }
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ParamRequestUpdateDateClient paramRequestUpdateDateClient) {

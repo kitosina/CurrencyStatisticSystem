@@ -18,7 +18,4 @@ public class ApiAnswer {
 //    @JsonFormat(shape = JsonFormat.Shape.ARRAY, pattern = "yyyy-MM-dd")
     public Map<Date, AnswerLatestListCurrency> rates;
 
-    @JsonProperty("base")
-    private String base;
-
 }
