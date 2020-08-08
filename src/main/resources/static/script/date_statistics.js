@@ -1,7 +1,7 @@
 var app = angular.module("DATE_STATISTICS",[]);
 
 app.controller("DATE_CONTROLLER",function($scope, $http){
-    graphics();
+    graphics(undefined)
 //   /range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}
     $scope.url = "/currency/range/";
     $scope.paramRequest = {
@@ -50,7 +50,6 @@ function validateDate(date) {
 }
 
 function graphics(data) {
-
 // Themes begin
         am4core.useTheme(am4themes_animated);
 // Themes end
@@ -61,15 +60,15 @@ function graphics(data) {
 // Add data
         chart.data = [];
 
-
 // Set input format for the dates
         chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
 
-        var labels = []
-        var values = []
+        var labels = [63.56, 64.98, 73, 63.56, 64.98, 73, 63.56, 64.98, 73]
+        var values = ['2018-08-21', '2018-08-22', '2018-08-23', '2018-08-24', '2018-08-25', '2018-08-26', '2018-08-27', '2018-08-28', '2018-08-29']
         if (data === undefined) {
+            //base data for the user (No actual)
             values = [63.56, 64.98, 73, 63.56, 64.98, 73, 63.56, 64.98, 73]
-            labels = ['21.08.2018', '22.08.2018', '23.08.2018', '21.08.2018', '22.08.2018', '23.08.2018', '21.08.2018', '22.08.2018', '23.08.2018']
+            labels = ['2018-08-21', '2018-08-22', '2018-08-23', '2018-08-24', '2018-08-25', '2018-08-26', '2018-08-27', '2018-08-28', '2018-08-29']
             for (var i = 0; i < values.length; i++) {
                 chart.data.push({
                     date: labels[i],
@@ -87,7 +86,6 @@ function graphics(data) {
                 })
             }
         }
-        console.log("data full" +  chart.data.sort());
 // Create axes
         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
