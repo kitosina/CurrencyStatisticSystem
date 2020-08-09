@@ -54,14 +54,14 @@ public class CurrencyService implements CurrencyUpdatable {
 //    }
 
     //code style check
-    public TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
-            String dateAfter, String dateBefore, String quotedTitleCurrency, String basicTitleCurrency) {
+    public TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
+            String dateAfter, String dateBefore, String basicTitleCurrency, String quotedTitleCurrency) {
 
         String dateAfterFromTime = dateAfter.concat(" 00:00:00+0000");
         String dateBeforeFromTime = dateBefore.concat(" 00:00:00+0000");
         TreeSet<Currency> set = new TreeSet<>();
-        return currencyRepository.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
-                dateAfterFromTime, dateBeforeFromTime, quotedTitleCurrency, basicTitleCurrency);
+        return currencyRepository.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
+                dateAfterFromTime, dateBeforeFromTime, basicTitleCurrency, quotedTitleCurrency);
     }
 
 
@@ -131,12 +131,18 @@ public class CurrencyService implements CurrencyUpdatable {
         return currencyRepository.saveAll(listCurrency);
     }
 
-    public Currency findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(Date date, String basicTitleCurrency, String quotedTitleCurrency) {
-        return currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency);
-    }
+//    public Currency findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(Date date, String basicTitleCurrency, String quotedTitleCurrency) {
+//        return currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency);
+//    }
+//
+//    public Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency) {
+//        return currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+//    }
 
-    public Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency) {
-        return currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+    public Double converterValue(String basicTitleCurrency, String quotedTitleCurrency) {
+        Date date = currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+        Double value = currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency).getValue();
+        return value;
     }
 
 }

@@ -45,25 +45,23 @@ public class CurrencyController {
         return ResponseEntity.ok(currencyService.findAll());
     }
 
-    //localhost:8080/currency/range/2020-08-00/2020-08-03/RUB/USD
+    //localhost:8080/currency/range/2020-08-00/2020-08-03/USD/EUR
     //code style check
-    @GetMapping("/range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}")
+    @GetMapping("/range/{dateAfter}/{dateBefore}/{basicTitleCurrency}/{quotedTitleCurrency}")
     public ResponseEntity findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency(
-            @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String quotedTitleCurrency, @PathVariable String basicTitleCurrency) {
+            @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
 
-        return currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
-                dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency).isEmpty()
+        return currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
+                dateAfter, dateBefore, basicTitleCurrency, quotedTitleCurrency).isEmpty()
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndQuotedTitleCurrencyAndBasicTitleCurrency(
-                        dateAfter, dateBefore, quotedTitleCurrency, basicTitleCurrency));
+                : ResponseEntity.ok(currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
+                        dateAfter, dateBefore, basicTitleCurrency, quotedTitleCurrency));
 
     }
 
-    @GetMapping("/converter/{quotedTitleCurrency}/{basicTitleCurrency}/{valueInput}")
-    public ResponseEntity converter(@PathVariable String quotedTitleCurrency, @PathVariable String basicTitleCurrency, @PathVariable Double valueInput) throws ParseException {
-        Date date = currencyService.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
-        Double actualValue = currencyService.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency).getValue();
-        return ResponseEntity.ok(actualValue * valueInput);
+    @GetMapping("/converter/{basicTitleCurrency}/{quotedTitleCurrency}")
+    public ResponseEntity converter(@PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
+        return ResponseEntity.ok(currencyService.converterValue(basicTitleCurrency, quotedTitleCurrency));
     }
 
 
