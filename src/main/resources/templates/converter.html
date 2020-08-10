@@ -11,12 +11,16 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+
 
 <!-- style -->
 <link rel="stylesheet" href="style/converter.css">
+<script src="script/converter.js" type="text/javascript"></script>
 
 </head>
-<body ng-app="CONVERTER" ng-controller="FACT_CONVERTER">
+
+<body ng-app="CONVERTER" ng-controller="CONVERTER_CONTROLLER">
 
 
 <!-- Шапка -->
@@ -51,6 +55,7 @@
 	</nav>
 </header>
 
+<!--Содержание-->
 <div class="container-fluid main">
 
 	<div class="row">
@@ -60,40 +65,41 @@
 			<form>
 			  <div class="row">
 			    <div class="col">
-			      <input type="text" class="form-control" placeholder="First name">
+                    <input ng-model="inputValue" ng-mode="nameUserForm" type="number" class="form-control" placeholder="Value"}>
 			    </div>
 			    <div class="col">
-			      <output type="text" class="form-control" placeholder="Last name">
-			    </div>
+			      <output ng-model="outputValue" type="text" class="form-control" placeholder="">{{outputValue}}</output>
+                </div>
 			  </div>
 			</form>
 		</div>
 		<div class="col-md-3">
-			<button type="button" class="btn btn-success">Success</button>
+			<button ng-click="convertCurrency()" type="button" class="btn btn-success">Success</button>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-md-3">
 		</div>
-		<div class="col-md-3">
-			<select class="custom-select" id="inputGroupSelect01">
-			    <option selected ng-model="">Currency basic</option>
-			    <option value="1">EUR</option>
-			    <option value="2">USD</option>
-			    <option value="3">RUB</option>
+		<div class="col-md-6">
+            <br>
+			<select class="custom-select" id="inputGroupSelect01" ng-model="coupleCurrency">
+			    <option disabled selected value="">Currency basic</option>
+			    <option value="EUR/USD">EUR/USD</option>
+			    <option value="USD/RUB">USD/RUB</option>
+			    <option value="EUR/RUB">EUR/RUB</option>
 			</select>
 		</div>
 		<div class="col-md-3">
-			<select class="custom-select" id="inputGroupSelect02">
-			    <option selected>Currency quoted</option>
-			    <option value="1">EUR</option>
-			    <option value="2">USD</option>
-			    <option value="3">RUB</option>
-			</select>
+<!--			<select class="custom-select" id="inputGroupSelect02" ng-model="nameCurrency2">-->
+<!--			    <option disabled selected value="">Currency quoted</option>-->
+<!--			    <option value="1">EUR</option>-->
+<!--			    <option value="2">USD</option>-->
+<!--			    <option value="3">RUB</option>-->
+<!--			</select>-->
 		</div>
-		<div class="col-md-3">
-		</div>
+<!--		<div class="col-md-3">-->
+<!--		</div>-->
 	</div>
 
 </div>
