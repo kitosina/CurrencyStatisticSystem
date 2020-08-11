@@ -59,9 +59,14 @@ public class CurrencyController {
 
     }
 
-    @GetMapping("/converter/{basicTitleCurrency}/{quotedTitleCurrency}")
+    @GetMapping("/actual/{basicTitleCurrency}/{quotedTitleCurrency}")
     public ResponseEntity converter(@PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
         return ResponseEntity.ok(currencyService.converterValue(basicTitleCurrency, quotedTitleCurrency));
+    }
+
+    @GetMapping("/last_data/{basicTitleCurrency}/{quotedTitleCurrency}")
+    public Date findMaxDate(@PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
+        return currencyService.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
     }
 
 

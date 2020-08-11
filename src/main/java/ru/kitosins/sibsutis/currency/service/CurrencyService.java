@@ -135,9 +135,9 @@ public class CurrencyService implements CurrencyUpdatable {
 //        return currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency);
 //    }
 //
-//    public Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency) {
-//        return currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
-//    }
+    public Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency) {
+        return currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+    }
 
     public Double converterValue(String basicTitleCurrency, String quotedTitleCurrency) {
         Date date = currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
