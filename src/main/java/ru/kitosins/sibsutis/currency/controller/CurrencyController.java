@@ -4,12 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kitosins.sibsutis.currency.api.entity.ApiAnswer;
 import ru.kitosins.sibsutis.currency.api.entity.ParamRequestUpdateDateClient;
-import ru.kitosins.sibsutis.currency.service.CurrencyService;
+import ru.kitosins.sibsutis.currency.service.CurrencyServiceImpl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -18,11 +15,11 @@ import java.util.Objects;
 @RequestMapping("/currency")
 public class CurrencyController {
 
-    private CurrencyService currencyService;
+    private CurrencyServiceImpl currencyServiceImpl;
 
     @Autowired
-    public CurrencyController(CurrencyService currencyService) {
-        this.currencyService = currencyService;
+    public CurrencyController(CurrencyServiceImpl currencyServiceImpl) {
+        this.currencyServiceImpl = currencyServiceImpl;
     }
 
     //currency/RUB/EUR пример запросса 1 EUR=84 RUB
@@ -35,14 +32,14 @@ public class CurrencyController {
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ParamRequestUpdateDateClient paramRequestUpdateDateClient) {
-        return Objects.isNull(currencyService.update(paramRequestUpdateDateClient))
+        return Objects.isNull(currencyServiceImpl.update(paramRequestUpdateDateClient))
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok().build();
     }
 
     @GetMapping
     public ResponseEntity findAll() {
-        return ResponseEntity.ok(currencyService.findAll());
+        return ResponseEntity.ok(currencyServiceImpl.findAll());
     }
 
     //localhost:8080/currency/range/2020-08-00/2020-08-03/USD/EUR
@@ -51,22 +48,22 @@ public class CurrencyController {
     public ResponseEntity findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency(
             @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
 
-        return currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
+        return currencyServiceImpl.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
                 dateAfter, dateBefore, basicTitleCurrency, quotedTitleCurrency).isEmpty()
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(currencyService.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
+                : ResponseEntity.ok(currencyServiceImpl.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
                         dateAfter, dateBefore, basicTitleCurrency, quotedTitleCurrency));
 
     }
 
     @GetMapping("/actual/{basicTitleCurrency}/{quotedTitleCurrency}")
     public ResponseEntity converter(@PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
-        return ResponseEntity.ok(currencyService.converterValue(basicTitleCurrency, quotedTitleCurrency));
+        return ResponseEntity.ok(currencyServiceImpl.converterValue(basicTitleCurrency, quotedTitleCurrency));
     }
 
     @GetMapping("/last_data/{basicTitleCurrency}/{quotedTitleCurrency}")
     public Date findMaxDate(@PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
-        return currencyService.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+        return currencyServiceImpl.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
     }
 
 

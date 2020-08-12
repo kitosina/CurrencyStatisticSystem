@@ -1,33 +1,15 @@
 package ru.kitosins.sibsutis.currency.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.kitosins.sibsutis.currency.entity.Fact;
-import ru.kitosins.sibsutis.currency.repository.FactRepository;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
-@Service
-public class FactService {
+public interface FactService {
 
-    private FactRepository factRepository;
+    List<Fact> findAll();
 
-    @Autowired
-    public FactService(FactRepository factRepository) {
-        this.factRepository = factRepository;
-    }
+    Fact save(Fact fact);
 
-    public List<Fact> findAll() {
-        return factRepository.findAll();
-    }
+    Fact findByNameCurrency(String nameCurrency);
 
-    public Fact save(Fact fact) {
-        return factRepository.save(fact);
-    }
-
-    public Fact findByNameCurrency(String nameCurrency) {
-        return factRepository.findByNameCurrency(nameCurrency);
-    }
 }

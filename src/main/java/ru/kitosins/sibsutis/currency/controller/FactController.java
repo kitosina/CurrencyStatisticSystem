@@ -1,11 +1,10 @@
 package ru.kitosins.sibsutis.currency.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kitosins.sibsutis.currency.entity.Fact;
-import ru.kitosins.sibsutis.currency.service.FactService;
+import ru.kitosins.sibsutis.currency.service.FactServiceImpl;
 
 import java.util.Objects;
 
@@ -13,28 +12,28 @@ import java.util.Objects;
 @RequestMapping("/fact")
 public class FactController {
 
-    private FactService factService;
+    private FactServiceImpl factServiceImpl;
 
     @Autowired
-    public FactController(FactService factService) {
-        this.factService = factService;
+    public FactController(FactServiceImpl factServiceImpl) {
+        this.factServiceImpl = factServiceImpl;
     }
 
     @PostMapping
     public ResponseEntity save(@RequestBody Fact fact) {
-        return ResponseEntity.ok(factService.save(fact));
+        return ResponseEntity.ok(factServiceImpl.save(fact));
     }
 
     @GetMapping
     public ResponseEntity findAll() {
-        return ResponseEntity.ok(factService.findAll());
+        return ResponseEntity.ok(factServiceImpl.findAll());
     }
 
     @GetMapping("/{nameCurrency}")
     public ResponseEntity findByNameCurrency(@PathVariable String nameCurrency) {
-        return Objects.isNull(factService.findByNameCurrency(nameCurrency))
+        return Objects.isNull(factServiceImpl.findByNameCurrency(nameCurrency))
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(factService.findByNameCurrency(nameCurrency));
+                : ResponseEntity.ok(factServiceImpl.findByNameCurrency(nameCurrency));
     }
 
 }
