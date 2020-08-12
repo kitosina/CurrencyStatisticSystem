@@ -82,8 +82,8 @@ public class CurrencyServiceImpl implements CurrencyService {
 //        Long id = currencyRepository.findMaxId()+1;
 //        List<Currency> listCurrency = new LinkedList<>();
 
-        if (paramRequestUpdateDateClient.getDateEntryClient().after(currencyRepository.findMaxDate(base, symbols))) {
-            String dateStartString = dateFormat.format(currencyRepository.findMaxDate(base, symbols));
+        if (paramRequestUpdateDateClient.getDateEntryClient().after(findMaxDate(base, symbols))) {
+            String dateStartString = dateFormat.format(findMaxDate(base, symbols));
             String dateEndString = dateFormat.format(paramRequestUpdateDateClient.getDateEntryClient());
 
             urlRequest = API.concat("?start_at=").concat(dateStartString).concat("&end_at=").concat(dateEndString).concat("&symbols=").concat(symbols).concat("&base=").concat(base);
@@ -105,7 +105,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 //
 //            }
 //            return currencyRepository.saveAll(listCurrency);
-            return this.saveAll(urlRequest, symbols, base);
+            return saveAll(urlRequest, symbols, base);
         }
         return null;
     }
@@ -116,7 +116,6 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         ApiAnswer apiAnswer = restTemplate.getForEntity(urlRequest, ApiAnswer.class).getBody();
         log.warn(urlRequest);
-//        log.warn(apiAnswer.toString());
         Set<Date> dateSet = apiAnswer.getRates().keySet();
         for (Date date : dateSet) {
             log.warn("Good");
@@ -129,14 +128,13 @@ public class CurrencyServiceImpl implements CurrencyService {
                 id++;
             }
         }
-        log.warn(currencyRepository.saveAll(listCurrency).toString());
         return currencyRepository.saveAll(listCurrency);
     }
 
 //    public Currency findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(Date date, String basicTitleCurrency, String quotedTitleCurrency) {
 //        return currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency);
 //    }
-//
+
     @Override
     public Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency) {
         return currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
