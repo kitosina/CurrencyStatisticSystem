@@ -3,14 +3,11 @@ package ru.kitosins.sibsutis.currency.repository;
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kitosins.sibsutis.currency.entity.Currency;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import java.util.TreeSet;
 
 @Repository
@@ -28,5 +25,13 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
     @AllowFiltering
     TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
             String dateAfter, String dateBefore, String basicTitleCurrency, String quotedTitleCurrency);
+
+
+    @Query("select MIN(id) FROM currency ALLOW FILTERING")
+    Long findMinId();
+
+    @Transactional
+    @Query("DELETE FROM currency WHERE id = ?0")
+    void delete(Long id);
 
 }

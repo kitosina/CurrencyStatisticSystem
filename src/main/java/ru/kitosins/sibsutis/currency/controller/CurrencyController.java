@@ -66,6 +66,10 @@ public class CurrencyController {
         return currencyServiceImpl.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
     }
 
+    @DeleteMapping("/clear")
+    public void clear() {
+        currencyServiceImpl.clear();
+    }
 
 
 

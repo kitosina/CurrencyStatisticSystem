@@ -28,7 +28,6 @@ public class CurrencyServiceImpl implements CurrencyService {
         this.currencyRepository = currencyRepository;
     }
 
-    @Override
     public List<Currency> findAll() {
         return currencyRepository.findAll();
     }
@@ -55,7 +54,6 @@ public class CurrencyServiceImpl implements CurrencyService {
 //    }
 
     //code style check
-    @Override
     public TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
             String dateAfter, String dateBefore, String basicTitleCurrency, String quotedTitleCurrency) {
 
@@ -110,8 +108,20 @@ public class CurrencyServiceImpl implements CurrencyService {
         return null;
     }
 
+    @Override
+    public void clear() {
+        if(currencyRepository.findMaxId() > 9400L) {
+            Long minId = currencyRepository.findMinId();
+            for(Integer idDayLimit = 1; idDayLimit <= 66; idDayLimit++) {
+                Long day = currencyRepository.findMinId();
+                log.warn("Delete Currency");
+                currencyRepository.delete(day);
+            }
+        }
+    }
+
     private List<Currency> saveAll(String urlRequest, String symbols, String base) {
-        Long id = currencyRepository.findMaxId() + 1;
+        Long id = findMaxId() + 1;
         List<Currency> listCurrency = new LinkedList<>();
 
         ApiAnswer apiAnswer = restTemplate.getForEntity(urlRequest, ApiAnswer.class).getBody();
@@ -131,18 +141,20 @@ public class CurrencyServiceImpl implements CurrencyService {
         return currencyRepository.saveAll(listCurrency);
     }
 
+    public Long findMaxId() {
+        return currencyRepository.findMaxId();
+    }
+
 //    public Currency findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(Date date, String basicTitleCurrency, String quotedTitleCurrency) {
 //        return currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency);
 //    }
 
-    @Override
     public Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency) {
         return currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
     }
 
-    @Override
     public Double converterValue(String basicTitleCurrency, String quotedTitleCurrency) {
-        Date date = currencyRepository.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
+        Date date = findMaxDate(basicTitleCurrency, quotedTitleCurrency);
         Double value = currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency).getValue();
         return value;
     }
