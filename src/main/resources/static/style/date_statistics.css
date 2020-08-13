@@ -44,6 +44,16 @@ body {
 	left: 100px;
 }
 
+#logout {
+	background-size: 30px;
+	position: relative;
+	margin-left: 30px;
+}
+
+#user_name {
+	color: lawngreen;
+}
+
 
 
 /*Подвал*/

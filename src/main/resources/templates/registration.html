@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+
+<!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Login</title>
@@ -14,10 +22,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 
     <!-- style -->
-    <link rel="stylesheet" href="style/login.css">
+    <script src="script/registration.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="style/registration.css">
 
 </head>
-<body>
+<body ng-app="REGISTRATION" ng-controller="REGISTRATION_CONTROLLER">
 
 <!-- Шапка -->
 <header class="header">
@@ -44,8 +53,6 @@
                     <a class="nav-link" href="/facts">Facts</a>
                 </li>
             </ul>
-            <span id="login_button" class="navbar-text">
-	    </span>
         </div>
     </nav>
 </header>
@@ -57,28 +64,24 @@
         <div class="col-md-5">
         </div>
         <div class="col-md-2">
-            <form th:action="@{/login}" method="post">
-                <div th:if="${param.error}" class="alert alert-danger">
-                    <p>Пользователя с таким логином или паролем не существует!</p>
-                </div>
-
-                <div th:if="${param.logout}">
-                    <div class="alert alert-info">
-                        Вы вышли из учетной записи!
-                    </div>
-                </div>
+            <form name=myForm>
                 <div class="form-group">
-                    <label for="exampleInputEmail1" style="color: #FFFFFF">Username</label>
-                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                    <label for="exampleInputUsername" style="color: #FFFFFF">Username</label>
+                    <input ng-model="newUser.username" type="text" name="username1" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Username">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1" style="color: #FFFFFF">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <input ng-model="newUser.password" type="password" name="password1" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-success btn-lg btn-block">Sing in</button>
+                <div class="form-group">
+                    <label for="exampleInputEmail" style="color: #FFFFFF">Email</label>
+                    <input ng-model="newUser.email" type="email" name="email1" class="form-control" id="exampleInputEmail" placeholder="Email">
+                </div>
+                <button ng-click="createNewUser()" type="submit" class="btn btn-success btn-lg btn-block">Registration</button>
             </form>
             <br>
-            <button onClick=location.href="/registration" type="submit" class="btn btn-warning btn-lg btn-block">Sing up</button>
+            <button onClick=location.href="/login" type="submit" class="btn btn-warning btn-lg btn-block">Sing in</button>
+
         </div>
         <div class="col-md-5">
         </div>
@@ -106,3 +109,7 @@
 </body>
 </html>
 
+
+
+</body>
+</html>

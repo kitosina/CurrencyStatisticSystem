@@ -55,6 +55,16 @@ body {
 	width: 365px;
 }
 
+#logout {
+	background-size: 30px;
+	position: relative;
+	margin-left: 30px;
+}
+
+#user_name {
+	color: lawngreen;
+}
+
 
 /*Подвал*/
 .footer {

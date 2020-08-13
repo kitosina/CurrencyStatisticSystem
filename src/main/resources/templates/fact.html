@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Fact</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,14 +23,14 @@
 <!-- Шапка -->
 <header class="header">
 	<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-primary">
-  		<a id="logo" class="col-md-3 navbar-brand" href="#">by KITOSINA</a>
+  		<a id="logo" class="col-md-4 navbar-brand" href="#">by KITOSINA</a>
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
   		</button>
-	  <div class="col-md-8 collapse navbar-collapse" id="navbarText">
+	  <div class="col-md-7 collapse navbar-collapse" id="navbarText">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item">
-	        <a class="nav-link" href="/home">Home</a>
+	        <a class="nav-link" href="/">Home</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="/date_statistics">Date statistics</a>
@@ -46,7 +46,10 @@
 	      </li>
 	    </ul>
 	    <span id="login_button" class="navbar-text">
-	      <a href="#">Login</a>
+	        <b><a href="/login" th:if="${#httpServletRequest.remoteUser == null}">Login</a></b>
+			<b><a id="user_name" th:if="${#httpServletRequest.remoteUser != null}">Your name: [[${#httpServletRequest.remoteUser}]]
+				<a id="logout" href="/logout">logout</a>
+			</a></b>
 	    </span>
 	  </div>
 	</nav>
