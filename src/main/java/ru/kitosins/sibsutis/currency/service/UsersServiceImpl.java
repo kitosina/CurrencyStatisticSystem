@@ -8,14 +8,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.Md4PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kitosins.sibsutis.currency.entity.Users;
 import ru.kitosins.sibsutis.currency.repository.UsersRepository;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -23,14 +22,35 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
 
     private UsersRepository usersRepository;
 
+    private Md4PasswordEncoder md4PasswordEncoder = new Md4PasswordEncoder();
+
     @Autowired
-    public void setUsersRepository(UsersRepository usersRepository) {
+    public UsersServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
-    @Override
     public Users findByUsername(String username) {
         return usersRepository.findByUsername(username);
+    }
+
+    @Override
+    @Transactional
+    public Byte save(Users users) {
+        Long id = usersRepository.findMaxId() + 1;
+        if(usersRepository.existsByUsername(users.getUsername())) {
+            return 1;
+        }
+        if(usersRepository.existsByEmail(users.getEmail())) {
+            return 2;
+        }
+        if(usersRepository.existsByUsernameAndEmail(users.getUsername(), users.getEmail())) {
+            return 3;
+        }
+        users.setId(id);
+        users.setPassword(md4PasswordEncoder.encode(users.getPassword()));
+        users.setRoles(Collections.singletonList("USER"));
+        usersRepository.save(users);
+        return 0;
     }
 
     @Override
@@ -46,8 +66,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     private Collection<? extends GrantedAuthority> listAuthority(List<String> roles) {
         List<GrantedAuthority> grantedAuthorityList = new LinkedList<>();
         for(String listRoles : roles) {
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(listRoles);
-            grantedAuthorityList.add(grantedAuthority);
+            grantedAuthorityList.add(new SimpleGrantedAuthority(listRoles));
         }
         log.warn(grantedAuthorityList.toString());
         return grantedAuthorityList;
