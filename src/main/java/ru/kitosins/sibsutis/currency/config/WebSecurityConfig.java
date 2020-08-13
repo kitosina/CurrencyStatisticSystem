@@ -28,14 +28,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // "/","/date_statistics", "/actual_statistics", "/converter", "/facts"
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/","/date_statistics", "/actual_statistics", "/converter", "/facts").hasAuthority("USER")
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/", "/registration", "/js/**", "/css/**", "/reg_user", "/contents/**").permitAll()
+                .antMatchers("/", "/actual_statistics", "/converter", "/facts").permitAll()
+                .antMatchers("/date_statistics").hasAuthority("USER")
+//                .antMatchers("/admin").hasAuthority("ADMIN")
                 .and()
-//                .antMatchers("/","/date_statistics", "/actual_statistics", "/converter", "/facts").hasRole("ADMIN")
-//                .and()
                 .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout()
+                .permitAll();
 
     }
 
@@ -75,5 +79,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //    @GetMapping("/facts")
     //    public String facts() {
     //        return "fact";
+
 }
 
