@@ -33,18 +33,26 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
         return usersRepository.findByUsername(username);
     }
 
+    public List<Users> findAll() {
+        return usersRepository.findAll();
+    }
+
+    public void deleteById(String username) {
+        usersRepository.deleteById(usersRepository.findId(username));
+    }
+
     @Override
     @Transactional
     public Byte save(Users users) {
         Long id = usersRepository.findMaxId() + 1;
+        if(usersRepository.existsByUsernameAndEmail(users.getUsername(), users.getEmail())) {
+            return 3;
+        }
         if(usersRepository.existsByUsername(users.getUsername())) {
             return 1;
         }
         if(usersRepository.existsByEmail(users.getEmail())) {
             return 2;
-        }
-        if(usersRepository.existsByUsernameAndEmail(users.getUsername(), users.getEmail())) {
-            return 3;
         }
         users.setId(id);
         users.setPassword(md4PasswordEncoder.encode(users.getPassword()));
