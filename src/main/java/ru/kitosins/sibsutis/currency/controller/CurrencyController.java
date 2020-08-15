@@ -22,14 +22,6 @@ public class CurrencyController {
         this.currencyServiceImpl = currencyServiceImpl;
     }
 
-    //currency/RUB/EUR пример запросса 1 EUR=84 RUB
-//    @PostMapping("/updateLast/{symbols}/{base}")
-//    public ResponseEntity update(@PathVariable String symbols, @PathVariable String base) {
-//        return Objects.isNull(currencyService.update2(symbols, base))
-//                ? ResponseEntity.noContent().build()
-//                : ResponseEntity.ok().build();
-//    }
-
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody ParamRequestUpdateDateClient paramRequestUpdateDateClient) {
         return Objects.isNull(currencyServiceImpl.update(paramRequestUpdateDateClient))
@@ -42,8 +34,7 @@ public class CurrencyController {
         return ResponseEntity.ok(currencyServiceImpl.findAll());
     }
 
-    //localhost:8080/currency/range/2020-08-00/2020-08-03/USD/EUR
-    //code style check
+    //localhost:8080/currency/range/2020-08-00/2020-08-03/USD/RUB
     @GetMapping("/range/{dateAfter}/{dateBefore}/{basicTitleCurrency}/{quotedTitleCurrency}")
     public ResponseEntity findByDateAfterAndDateBeforeAndQuotedTitleCurrencyAndBasicTitleCurrency(
             @PathVariable String dateAfter, @PathVariable String dateBefore, @PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
@@ -65,12 +56,5 @@ public class CurrencyController {
     public Date findMaxDate(@PathVariable String basicTitleCurrency, @PathVariable String quotedTitleCurrency) {
         return currencyServiceImpl.findMaxDate(basicTitleCurrency, quotedTitleCurrency);
     }
-
-    @DeleteMapping("/clear")
-    public void clear() {
-        currencyServiceImpl.clear();
-    }
-
-
 
 }
