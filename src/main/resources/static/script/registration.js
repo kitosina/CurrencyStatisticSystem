@@ -30,9 +30,11 @@ app.controller("REGISTRATION_CONTROLLER",function($scope, $http){
                     alert("Username and Email is taken")
                 }
                 if (response.data === 0) {
-                    alert("Successful registration")
+                    alert("Successful registration! \n" +
+                        "You will be redirected to the home page")
+                    window.location.href = "/"
                 }
-            });
+            })
         }
     }
 
@@ -48,10 +50,20 @@ app.controller("REGISTRATION_CONTROLLER",function($scope, $http){
             flag = false;
         }
         if ($scope.newUser.email === "") {
-            alertLabel += "3) please input email"
+            alertLabel += "3) please input email\n"
             flag = false;
         }
-        alert(alertLabel);
+        if ($scope.newUser.username.length < 4) {
+            alertLabel += "* Short length username! Enter username More than 4 characters\n"
+            flag = false;
+        }
+        if ($scope.newUser.password.length < 8) {
+            alertLabel += "* Short length password! Enter password More than 8 characters\n"
+            flag = false;
+        }
+        if(!flag) {
+            alert(alertLabel);
+        }
         return flag;
     }
 

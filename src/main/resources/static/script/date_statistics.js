@@ -1,8 +1,8 @@
 var app = angular.module("DATE_STATISTICS",[]);
 
 app.controller("DATE_CONTROLLER",function($scope, $http){
+
     graphics(undefined)
-//   /range/{dateAfter}/{dateBefore}/{quotedTitleCurrency}/{basicTitleCurrency}
     $scope.url = "/currency/range/";
     $scope.paramRequest = {
         dateAfter: "",
@@ -12,6 +12,11 @@ app.controller("DATE_CONTROLLER",function($scope, $http){
 
     $scope.analysisGlobalData = function () {
         console.log('call');
+            update1().then(function () {
+                update2().then(function () {
+                    update3()
+                })
+            })
         if (($scope.paramRequest.dateAfter !== "") && ($scope.paramRequest.dateBefore !== "") && ($scope.paramRequest.currencyCouple !== "")) {
             var updateDateAfter = validateDate($scope.paramRequest.dateAfter);
             var updateDateBefore = validateDate($scope.paramRequest.dateBefore)
@@ -25,6 +30,44 @@ app.controller("DATE_CONTROLLER",function($scope, $http){
                 this.graphics(response.data);
             })
         } else alert("Please input currency!");
+    }
+
+
+
+    update1 = async function () {
+        return $http({
+            url: '/currency/update',
+            method: 'POST',
+            data: {
+                dateEntryClient: $scope.date,
+                base: "EUR",
+                symbols: "USD"
+            }
+        })
+    }
+
+    update2 = async function () {
+        return $http({
+            url: '/currency/update',
+            method: 'POST',
+            data: {
+                dateEntryClient: $scope.date,
+                base: "USD",
+                symbols: "RUB"
+            }
+        })
+    }
+
+    update3 = async function () {
+        return $http({
+            url: '/currency/update',
+            method: 'POST',
+            data: {
+                dateEntryClient: $scope.date,
+                base: "EUR",
+                symbols: "RUB"
+            }
+        })
     }
 
 });

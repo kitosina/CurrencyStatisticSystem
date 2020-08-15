@@ -1,10 +1,11 @@
 var app = angular.module("FACTS",[]);
 
-app.controller("FACT_CONTROLLER",function($scope, $http){
+app.controller("FACT_CONTROLLER",function($scope, $http, $filter){
 
     $scope.nameCurrency = "";
     $scope.listFact = [];
     $scope.url = "/fact/";
+
 
     $scope.selectCurrency = function () {
         console.log($scope.nameCurrency);
@@ -19,5 +20,6 @@ app.controller("FACT_CONTROLLER",function($scope, $http){
 
         } else alert("Please input currency!");
     }
+
 
 });

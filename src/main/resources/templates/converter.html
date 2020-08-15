@@ -4,24 +4,21 @@
 	<title>Converter</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-<!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 
 
-<!-- style -->
 <link rel="stylesheet" href="style/converter.css">
-    <script src="script/converter.js" type="text/javascript"></script>
+<script src="script/converter.js" type="text/javascript"></script>
 
+<link rel="SHORTCUT ICON" href="image/icon.ico" type="image/ico">
 </head>
 
 <body ng-app="CONVERTER" ng-controller="CONVERTER_CONTROLLER">
-
 
 <!-- Шапка -->
 <header class="header">
@@ -68,7 +65,7 @@
 			<form>
 			  <div class="row">
 			    <div class="col">
-                    <input ng-model="inputValue" ng-mode="nameUserForm" type="number" class="form-control" placeholder="Value"}>
+                    <input ng-model="inputValue" ng-mode="nameUserForm" type="number" class="form-control" placeholder="Value">
 			    </div>
 			    <div class="col">
 			      <output ng-model="outputValue" type="text" class="form-control" placeholder="">{{outputValue}}</output>
@@ -94,15 +91,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-<!--			<select class="custom-select" id="inputGroupSelect02" ng-model="nameCurrency2">-->
-<!--			    <option disabled selected value="">Currency quoted</option>-->
-<!--			    <option value="1">EUR</option>-->
-<!--			    <option value="2">USD</option>-->
-<!--			    <option value="3">RUB</option>-->
-<!--			</select>-->
 		</div>
-<!--		<div class="col-md-3">-->
-<!--		</div>-->
 	</div>
 
 </div>
