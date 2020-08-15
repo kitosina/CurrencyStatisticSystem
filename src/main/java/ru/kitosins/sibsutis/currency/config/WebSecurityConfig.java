@@ -25,14 +25,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void setUsersService(UsersServiceImpl usersService) {
         this.usersService = usersService;
     }
-// "/","/date_statistics", "/actual_statistics", "/converter", "/facts"
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/", "/registration", "/js/**", "/css/**", "/reg_user", "/contents/**").permitAll()
                 .antMatchers("/", "/actual_statistics", "/converter", "/facts").permitAll()
                 .antMatchers("/date_statistics").hasAuthority("USER")
-//                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers("/admin", "/administration", "/administration/clear", "/administration/delete/by/").hasAuthority("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -40,7 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
     }
 
     @Bean
@@ -55,30 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setUserDetailsService(usersService);
         return daoAuthenticationProvider;
     }
-
-    //  @GetMapping("/home")
-    //    public String home() {
-    //        return "index";
-    //    }
-    //
-    //    @GetMapping("/date_statistics")
-    //    public String dateStatistics() {
-    //        return "date_statistics";
-    //    }
-    //
-    //    @GetMapping("/actual_statistics")
-    //    public String actualStatistics() {
-    //        return "actual_statistics";
-    //    }
-    //
-    //    @GetMapping("/converter")
-    //    public String converter() {
-    //        return "converter";
-    //    }
-    //
-    //    @GetMapping("/facts")
-    //    public String facts() {
-    //        return "fact";
 
 }
 
