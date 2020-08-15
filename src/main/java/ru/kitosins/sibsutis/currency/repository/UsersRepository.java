@@ -4,10 +4,7 @@ import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.kitosins.sibsutis.currency.entity.Fact;
 import ru.kitosins.sibsutis.currency.entity.Users;
-
-import java.util.UUID;
 
 @Repository
 public interface UsersRepository extends CassandraRepository<Users, Long> {
@@ -26,5 +23,10 @@ public interface UsersRepository extends CassandraRepository<Users, Long> {
 
     @Query("select MAX(id) FROM users ALLOW FILTERING")
     Long findMaxId();
+
+    @Query("select id from users where username = ?0 ALLOW FILTERING")
+    Long findId(String username);
+
+    void deleteById(Long id);
 
 }
