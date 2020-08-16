@@ -10,7 +10,6 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -33,6 +32,5 @@ public class Fact {
 
     @Column
     private List<String> listFact;
-
 
 }

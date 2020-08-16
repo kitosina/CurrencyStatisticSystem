@@ -6,8 +6,6 @@ import ru.kitosins.sibsutis.currency.entity.Fact;
 import ru.kitosins.sibsutis.currency.repository.FactRepository;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class FactService {

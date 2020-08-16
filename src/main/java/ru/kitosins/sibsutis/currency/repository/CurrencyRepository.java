@@ -26,7 +26,6 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
     TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
             String dateAfter, String dateBefore, String basicTitleCurrency, String quotedTitleCurrency);
 
-
     @Query("select MIN(id) FROM currency ALLOW FILTERING")
     Long findMinId();
 

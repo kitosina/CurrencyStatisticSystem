@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kitosins.sibsutis.currency.service.CurrencyServiceImpl;
-import ru.kitosins.sibsutis.currency.service.UsersService;
 import ru.kitosins.sibsutis.currency.service.UsersServiceImpl;
 
 import java.util.Objects;

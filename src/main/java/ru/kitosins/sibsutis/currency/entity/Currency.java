@@ -2,7 +2,6 @@ package ru.kitosins.sibsutis.currency.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.cql.Ordering;
@@ -12,7 +11,6 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -46,6 +44,7 @@ public class Currency implements Comparable<Currency>{
     public int compareTo(Currency currency) {
             return date.compareTo(currency.getDate());
     }
+
 }
 
 
