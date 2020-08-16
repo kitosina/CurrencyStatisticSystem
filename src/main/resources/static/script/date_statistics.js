@@ -1,6 +1,6 @@
 var app = angular.module("DATE_STATISTICS",[]);
 
-app.controller("DATE_CONTROLLER",function($scope, $http){
+app.controller("DATE_CONTROLLER",function($scope, $http, $filter){
 
     graphics(undefined)
     $scope.url = "/currency/range/";
@@ -9,6 +9,9 @@ app.controller("DATE_CONTROLLER",function($scope, $http){
         dateBefore: "",
         currencyCouple: "",
     }
+
+    $scope.date = new Date();
+    $scope.date = $filter('date')($scope.date, 'yyyy-MM-dd');
 
     $scope.analysisGlobalData = function () {
         console.log('call');
@@ -26,7 +29,6 @@ app.controller("DATE_CONTROLLER",function($scope, $http){
                 url: urlRequest,
                 method: "GET"
             }).then(function (response) {
-                console.log(response.data);
                 this.graphics(response.data);
             })
         } else alert("Please input currency!");

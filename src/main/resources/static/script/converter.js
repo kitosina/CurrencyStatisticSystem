@@ -9,8 +9,6 @@ app.controller("CONVERTER_CONTROLLER",function($scope, $http){
     $scope.nameUserForm = "";
 
     $scope.convertCurrency = function () {
-        console.log($scope.coupleCurrency);
-        console.log($scope.inputValue);
         if (($scope.coupleCurrency !== "") && ($scope.inputValue !== null)){
             urlRequest = $scope.url + $scope.coupleCurrency;
             $http({
