@@ -106,6 +106,7 @@ public class CurrencyServiceImpl implements CurrencyService {
             log.info("Request API: " + urlRequest);
             return saveAll(urlRequest, symbols, base);
         }
+        log.warn("Actual data in DB, not need update");
         return null;
     }
 
@@ -129,7 +130,7 @@ public class CurrencyServiceImpl implements CurrencyService {
             Currency currencyLoad = new Currency(id, base, symbols, date, value);
             log.warn(currencyLoad.toString());
             if (Objects.isNull(currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, base, symbols))) {
-                log.warn("Date not found DB save this data");
+                log.warn("Date not found DB save this data: " + currencyLoad);
                 listCurrency.add(currencyLoad);
                 id++;
             }
@@ -179,7 +180,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     public Double converterValue(String basicTitleCurrency, String quotedTitleCurrency) {
         Date date = findMaxDate(basicTitleCurrency, quotedTitleCurrency);
         Double value = currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, basicTitleCurrency, quotedTitleCurrency).getValue();
-        log.info("Converter: " + "Actual Date:" + date + " - " + basicTitleCurrency +"/" + quotedTitleCurrency + " = " + value);
+        log.info("Converter: " + date + " - " + basicTitleCurrency +"/" + quotedTitleCurrency + " = " + value);
         return value;
     }
 

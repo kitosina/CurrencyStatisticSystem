@@ -1,9 +1,5 @@
 package ru.kitosins.sibsutis.currency.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.Table;
 import ru.kitosins.sibsutis.currency.api.entity.ParamRequestUpdateDateClient;
 import ru.kitosins.sibsutis.currency.entity.Currency;
 

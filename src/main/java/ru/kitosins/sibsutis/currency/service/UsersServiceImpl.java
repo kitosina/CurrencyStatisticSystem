@@ -136,7 +136,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
         for(String listRoles : roles) {
             grantedAuthorityList.add(new SimpleGrantedAuthority(listRoles));
         }
-        log.warn(grantedAuthorityList.toString());
+        log.info(grantedAuthorityList.toString());
         return grantedAuthorityList;
     }
 
