@@ -16,51 +16,105 @@ import ru.kitosins.sibsutis.currency.repository.UsersRepository;
 
 import java.util.*;
 
+/**
+ * Users service class
+ * @author kitosina
+ * @version 0.1
+ * @see Slf4j
+ * @see Service
+ * @see CurrencyService
+ */
 @Slf4j
 @Service
 public class UsersServiceImpl implements UsersService, UserDetailsService {
 
+    /**
+     * Dao usersRepository
+     */
     private UsersRepository usersRepository;
 
+    /**
+     * Object for password encoding md4PasswordEncoder
+     */
     private Md4PasswordEncoder md4PasswordEncoder = new Md4PasswordEncoder();
 
+    /**
+     * This method injects UsersRepository object
+     * @see Autowired
+     * @param usersRepository
+     */
     @Autowired
     public UsersServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
+    /**
+     * This method getting Users by:
+     * @param username
+     * @return Users object
+     */
     public Users findByUsername(String username) {
         return usersRepository.findByUsername(username);
     }
 
+    /**
+     * This method needed for get Users from DB
+     * @return List Users
+     */
     public List<Users> findAll() {
         return usersRepository.findAll();
     }
 
+    /**
+     * Delete Users in DB by:
+     * @param username
+     */
     public void deleteById(String username) {
+        log.warn("Delete");
         usersRepository.deleteById(usersRepository.findId(username));
     }
 
+    /**
+     * This method save new Users object in DB
+     * @param users
+     * @see Override
+     * @see Transactional
+     * @return Code save
+     */
     @Override
     @Transactional
     public Byte save(Users users) {
         Long id = usersRepository.findMaxId() + 1;
         if(usersRepository.existsByUsernameAndEmail(users.getUsername(), users.getEmail())) {
+            log.warn("New user not created - exists username and email");
             return 3;
         }
         if(usersRepository.existsByUsername(users.getUsername())) {
+            log.warn("New user not created - exists username");
             return 1;
         }
         if(usersRepository.existsByEmail(users.getEmail())) {
+            log.warn("New user not created - exists email");
             return 2;
         }
+
         users.setId(id);
         users.setPassword(md4PasswordEncoder.encode(users.getPassword()));
         users.setRoles(Collections.singletonList("USER"));
         usersRepository.save(users);
+        log.info("Success save new user");
         return 0;
     }
 
+    /**
+     * This method getting UserDetails by:
+     * @param username
+     * @see UserDetails
+     * @see Override
+     * @see Transactional
+     * @return Users object
+     * @throws UsernameNotFoundException
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -71,6 +125,12 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
         return new User(users.getUsername(), users.getPassword(), listAuthority(users.getRoles()));
     }
 
+    /**
+     * This method create list authority
+     * @param roles
+     * @see GrantedAuthority
+     * @return Users roles
+     */
     private Collection<? extends GrantedAuthority> listAuthority(List<String> roles) {
         List<GrantedAuthority> grantedAuthorityList = new LinkedList<>();
         for(String listRoles : roles) {

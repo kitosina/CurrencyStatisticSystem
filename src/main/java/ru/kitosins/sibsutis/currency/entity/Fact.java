@@ -12,12 +12,26 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.util.List;
 
+/**
+ * Fact representation class
+ * @author kitosina
+ * @version 0.1
+ * @see Data
+ * @see AllArgsConstructor
+ * @see NoArgsConstructor
+ * @see Table
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("fact")
 public class Fact {
 
+    /**
+     * An id field for DB identification
+     * @see Id
+     * @see PrimaryKeyColumn
+     */
     @Id
     @PrimaryKeyColumn(
             name = "id",
@@ -27,9 +41,17 @@ public class Fact {
     )
     private Long id;
 
+    /**
+     * nameCurrency field for DB
+     * @see Column
+     */
     @Column
     private String nameCurrency;
 
+    /**
+     * listFact field for DB
+     * @see Column
+     */
     @Column
     private List<String> listFact;
 
