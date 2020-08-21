@@ -8,7 +8,6 @@
 ***
 ### Link to the project: [Currency Static System]()
 ***
-
 ### Used technologies:
 - ### AngularJS
 ![Angular](https://user-images.githubusercontent.com/51533399/90915511-e1104580-e409-11ea-82b0-b978fabca4a5.png)
@@ -30,17 +29,17 @@
 ### [Exchangeratesapi.io](https://exchangeratesapi.io/)
 ***
 ### Project Download
-`git clone https://github.com/kitosina/CurrencyStatisticSystem.git`
+     `git clone https://github.com/kitosina/CurrencyStatisticSystem.git`
 ***
 ### Program assembly
-`sudo gradle build`
+     `sudo gradle build`
 ***
 ### Program launch
-`gradle bootRun`
+     `gradle bootRun`
 ##### Gradle version 4.4.1 and higher
 ***
 ### Generate Documentation
-`gradle javadoc`
+     `gradle javadoc`
 ***
 ### The project was made by:
 ##### Frontend and Backend: [kitosina](https://github.com/kitosina)
