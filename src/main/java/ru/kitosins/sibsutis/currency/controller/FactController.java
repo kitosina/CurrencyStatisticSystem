@@ -5,15 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kitosins.sibsutis.currency.entity.Fact;
-import ru.kitosins.sibsutis.currency.service.FactService;
+import ru.kitosins.sibsutis.currency.service.FactServiceImpl;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
  * Fact controller class
  * Processing fact request
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Slf4j
  * @see RestController
  * @see RequestMapping
@@ -26,7 +27,7 @@ public class FactController {
     /**
      * factService for repository interaction
      */
-    private FactService factService;
+    private FactServiceImpl factService;
 
     /**
      * This method injects FactService object
@@ -34,7 +35,7 @@ public class FactController {
      * @param factService
      */
     @Autowired
-    public FactController(FactService factService) {
+    public FactController(FactServiceImpl factService) {
         this.factService = factService;
     }
 
@@ -75,6 +76,12 @@ public class FactController {
         return Objects.isNull(factService.findByNameCurrency(nameCurrency))
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(factService.findByNameCurrency(nameCurrency));
+    }
+
+    @GetMapping("/load")
+    public void loadingDataBase() throws IOException {
+        log.warn("Load DB");
+        factService.loadingDataBase();
     }
 
 }

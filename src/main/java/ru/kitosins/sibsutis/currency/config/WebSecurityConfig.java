@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,6 +24,7 @@ import ru.kitosins.sibsutis.currency.service.UsersServiceImpl;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -49,10 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/", "/registration", "/js/**", "/css/**", "/reg_user", "/contents/**").permitAll()
-                .antMatchers("/", "/actual_statistics", "/converter", "/facts").permitAll()
+                .antMatchers("/","/actual_statistics", "/converter", "/facts", "/registration", "/js/**", "/css/**", "/contents/**").permitAll()
                 .antMatchers("/date_statistics").hasAuthority("USER")
-                .antMatchers("/admin", "/administration", "/administration/clear", "/administration/delete/by/").hasAuthority("ADMIN")
+                .antMatchers("/admin", "/administration", "/administration/**").hasAuthority("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")

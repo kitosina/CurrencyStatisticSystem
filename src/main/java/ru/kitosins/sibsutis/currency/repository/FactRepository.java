@@ -1,27 +1,28 @@
 package ru.kitosins.sibsutis.currency.repository;
 
-import org.springframework.data.cassandra.repository.AllowFiltering;
-import org.springframework.data.cassandra.repository.CassandraRepository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.kitosins.sibsutis.currency.entity.Fact;
+
+import java.util.List;
 
 /**
  * DAO repository for Fact objects
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Repository
- * @see CassandraRepository
+ * @see JpaRepository
  */
 @Repository
-public interface FactRepository extends CassandraRepository<Fact, Long> {
+public interface FactRepository extends JpaRepository <Fact, Long> {
 
     /**
      * Searching Fact object in DB by:
      * @param nameCurrency
-     * @see AllowFiltering
      * @return Fact object
      */
-    @AllowFiltering
-    Fact findByNameCurrency(String nameCurrency);
+    List<Fact> findByNameCurrency(String nameCurrency);
 
 }

@@ -3,6 +3,7 @@ package ru.kitosins.sibsutis.currency.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import ru.kitosins.sibsutis.currency.api.entity.ApiAnswer;
 import ru.kitosins.sibsutis.currency.api.entity.ParamRequestUpdateDateClient;
@@ -15,7 +16,7 @@ import java.util.*;
 /**
  * Currency service class
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Slf4j
  * @see Service
  * @see CurrencyService
@@ -40,7 +41,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
-     * URL API
+     * URL external API
      */
     private static final String API = "https://api.exchangeratesapi.io/history";
 
@@ -73,19 +74,11 @@ public class CurrencyServiceImpl implements CurrencyService {
     public TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
             String dateAfter, String dateBefore, String basicTitleCurrency, String quotedTitleCurrency) {
 
-        String dateAfterFromTime = dateAfter.concat(" 00:00:00+0000");
-        String dateBeforeFromTime = dateBefore.concat(" 00:00:00+0000");
+        String dateAfterFromTime = dateAfter.concat(" 07:00:00.000000");
+        String dateBeforeFromTime = dateBefore.concat(" 07:00:00.000000");
         return currencyRepository.findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
-                dateAfterFromTime, dateBeforeFromTime, basicTitleCurrency, quotedTitleCurrency);
+                dateAfter, dateBefore, basicTitleCurrency, quotedTitleCurrency);
     }
-
-
-    //date example {
-    //	"dateEntryClient":"2020-08-07",
-    //	"base": "EUR",
-    //	"symbols": "USD"
-    //}
-    //https://api.exchangeratesapi.io/history?start_at=2020-08-06&end_at=2020-08-07&symbol=RUB,EUR&base=USD
 
     /**
      * This method sends a request to a third party API to get new data
@@ -95,20 +88,41 @@ public class CurrencyServiceImpl implements CurrencyService {
      */
     @Override
     public List<Currency> update(ParamRequestUpdateDateClient paramRequestUpdateDateClient) {
-        String urlRequest = API;
         String symbols = paramRequestUpdateDateClient.getSymbols();
         String base = paramRequestUpdateDateClient.getBase();
-        if (paramRequestUpdateDateClient.getDateEntryClient().after(findMaxDate(base, symbols))) {
-            log.warn("Load new data");
-            String dateStartString = dateFormat.format(findMaxDate(base, symbols));
-            String dateEndString = dateFormat.format(paramRequestUpdateDateClient.getDateEntryClient());
-            urlRequest = API.concat("?start_at=").concat(dateStartString).concat("&end_at=").concat(dateEndString).concat("&symbols=").concat(symbols).concat("&base=").concat(base);
-            log.info("Request API: " + urlRequest);
-            return saveAll(urlRequest, symbols, base);
+
+        //Loading Global Data in API Currency
+        if(Objects.isNull(findMaxId(base, symbols))) {
+            log.info("LOADING DB GLOBAL DATA!!!");
+            String dateStartString = "2019-01-01";
+            return getCurrencyList(paramRequestUpdateDateClient, symbols, base, dateStartString);
         }
-        log.warn("Actual data in DB, not need update");
+
+        if (paramRequestUpdateDateClient.getDateEntryClient().after(findMaxDate(base, symbols))) {
+            log.info("Preparation for Load new data");
+            String dateStartString = dateFormat.format(findMaxDate(base, symbols));
+            return getCurrencyList(paramRequestUpdateDateClient, symbols, base, dateStartString);
+        }
+        log.info("Actual data in DB, not need update");
         return null;
     }
+
+    /**
+     * This method stores the Currency list that comes from the API in the database
+     * @param paramRequestUpdateDateClient
+     * @param symbols
+     * @param base
+     * @param dateStartString
+     * @return Save List<Currency>
+     */
+    private List<Currency> getCurrencyList(ParamRequestUpdateDateClient paramRequestUpdateDateClient, String symbols, String base, String dateStartString) {
+        String urlRequest;
+        String dateEndString = dateFormat.format(paramRequestUpdateDateClient.getDateEntryClient());
+        urlRequest = API.concat("?start_at=").concat(dateStartString).concat("&end_at=").concat(dateEndString).concat("&symbols=").concat(symbols).concat("&base=").concat(base);
+        log.info("Request API: " + urlRequest);
+        return saveAll(urlRequest, symbols, base);
+    }
+
 
     /**
      * This method saves the received data in DB
@@ -118,7 +132,6 @@ public class CurrencyServiceImpl implements CurrencyService {
      * @return List Currency object
      */
     private List<Currency> saveAll(String urlRequest, String symbols, String base) {
-        Long id = findMaxId() + 1;
         List<Currency> listCurrency = new LinkedList<>();
 
         ApiAnswer apiAnswer = restTemplate.getForEntity(urlRequest, ApiAnswer.class).getBody();
@@ -127,12 +140,11 @@ public class CurrencyServiceImpl implements CurrencyService {
         for (Date date : dateSet) {
             log.warn("Date check in DB");
             Double value = apiAnswer.getRates().get(date).getValue();
-            Currency currencyLoad = new Currency(id, base, symbols, date, value);
+            Currency currencyLoad = new Currency(null, base, symbols, date, value);
             log.warn(currencyLoad.toString());
             if (Objects.isNull(currencyRepository.findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(date, base, symbols))) {
                 log.warn("Date not found DB save this data: " + currencyLoad);
                 listCurrency.add(currencyLoad);
-                id++;
             }
         }
         return currencyRepository.saveAll(listCurrency);
@@ -141,23 +153,25 @@ public class CurrencyServiceImpl implements CurrencyService {
     /**
      * This is method clear DB
      * @see Override
+     * @see Transactional
      */
     @Override
+    @Transactional
     public void clear() {
         log.warn("Admin clear DB");
-        log.info(String.valueOf(currencyRepository.findMaxId()));
         for(Integer idDayLimit = 1; idDayLimit <= 178; idDayLimit++) {
-            currencyRepository.delete(currencyRepository.findMinId());
+            currencyRepository.deleteById(currencyRepository.findMinId());
         }
+        log.warn("End clear DB");
     }
 
     /**
      * This method getting max id in DB
      * @return Long
      */
-    public Long findMaxId() {
+    public Long findMaxId(String basicTitleCurrency, String quotedTitleCurrency) {
         log.info("Query find max ID");
-        return currencyRepository.findMaxId();
+        return currencyRepository.findMaxId(basicTitleCurrency, quotedTitleCurrency);
     }
 
     /**

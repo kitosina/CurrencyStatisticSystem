@@ -2,6 +2,7 @@ package ru.kitosins.sibsutis.currency.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,15 +12,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.Md4PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kitosins.sibsutis.currency.entity.Role;
 import ru.kitosins.sibsutis.currency.entity.Users;
 import ru.kitosins.sibsutis.currency.repository.UsersRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Users service class
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Slf4j
  * @see Service
  * @see CurrencyService
@@ -51,16 +54,20 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     /**
      * This method getting Users by:
      * @param username
+     * @see Transactional
      * @return Users object
      */
+    @Transactional
     public Users findByUsername(String username) {
         return usersRepository.findByUsername(username);
     }
 
     /**
      * This method needed for get Users from DB
+     * @see Transactional
      * @return List Users
      */
+    @Transactional
     public List<Users> findAll() {
         return usersRepository.findAll();
     }
@@ -68,10 +75,12 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     /**
      * Delete Users in DB by:
      * @param username
+     * @see Transactional
      */
+    @Transactional
     public void deleteById(String username) {
-        log.warn("Delete");
-        usersRepository.deleteById(usersRepository.findId(username));
+        log.warn("Delete user: " + username);
+        usersRepository.deleteByUsername(username);
     }
 
     /**
@@ -84,7 +93,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     @Override
     @Transactional
     public Byte save(Users users) {
-        Long id = usersRepository.findMaxId() + 1;
+
         if(usersRepository.existsByUsernameAndEmail(users.getUsername(), users.getEmail())) {
             log.warn("New user not created - exists username and email");
             return 3;
@@ -98,9 +107,8 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
             return 2;
         }
 
-        users.setId(id);
         users.setPassword(md4PasswordEncoder.encode(users.getPassword()));
-        users.setRoles(Collections.singletonList("USER"));
+        users.setRoles(Collections.singleton(Role.USER));
         usersRepository.save(users);
         log.info("Success save new user");
         return 0;
@@ -118,7 +126,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users users = usersRepository.findByUsername(username);
+        Users users = findByUsername(username);
         if (users == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
@@ -129,15 +137,11 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
      * This method create list authority
      * @param roles
      * @see GrantedAuthority
+     * @see Collection
      * @return Users roles
      */
-    private Collection<? extends GrantedAuthority> listAuthority(List<String> roles) {
-        List<GrantedAuthority> grantedAuthorityList = new LinkedList<>();
-        for(String listRoles : roles) {
-            grantedAuthorityList.add(new SimpleGrantedAuthority(listRoles));
-        }
-        log.info(grantedAuthorityList.toString());
-        return grantedAuthorityList;
+    private Collection<? extends GrantedAuthority> listAuthority(Collection<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
     }
 
 }

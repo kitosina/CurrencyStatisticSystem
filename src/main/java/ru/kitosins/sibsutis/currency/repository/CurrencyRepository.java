@@ -1,52 +1,52 @@
 package ru.kitosins.sibsutis.currency.repository;
 
-import org.springframework.data.cassandra.repository.AllowFiltering;
-import org.springframework.data.cassandra.repository.CassandraRepository;
-import org.springframework.data.cassandra.repository.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kitosins.sibsutis.currency.entity.Currency;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.TreeSet;
 
 /**
  * DAO repository for Currency objects
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Repository
- * @see CassandraRepository
+ * @see JpaRepository
  */
 @Repository
-public interface CurrencyRepository extends CassandraRepository<Currency, Long> {
+public interface CurrencyRepository extends JpaRepository<Currency, Long> {
 
     /**
      * Searching Currency object in DB by:
      * @param date
      * @param basicTitleCurrency
      * @param quotedTitleCurrency
-     * @see Query
      * @return Currency object
      */
-    @AllowFiltering
     Currency findByDateAndBasicTitleCurrencyAndQuotedTitleCurrency(Date date, String basicTitleCurrency, String quotedTitleCurrency);
 
     /**
-     * Searching max id in DB
+     * Searching max id in DB by:
+     * @param basicTitleCurrency
+     * @param quotedTitleCurrency
      * @see Query
-     * @return Long
+     * @return max id
      */
-    @Query("select MAX(id) FROM currency ALLOW FILTERING")
-    Long findMaxId();
+    @Query(value = "select MAX(id) FROM currency WHERE basic_Title_Currency = ?1 AND quoted_Title_Currency = ?2", nativeQuery = true)
+    Long findMaxId(String basicTitleCurrency, String quotedTitleCurrency);
 
     /**
      * Searching max date in DB by:
      * @param basicTitleCurrency
      * @param quotedTitleCurrency
      * @see Query
-     * @return Date
+     * @return max date
      */
-    @Query("select MAX(date) FROM currency WHERE basicTitleCurrency = ?0 AND quotedTitleCurrency = ?1 ALLOW FILTERING")
+    @Query(value = "select MAX(date) FROM currency WHERE basic_Title_Currency = ?1 AND quoted_Title_Currency = ?2", nativeQuery = true)
     Date findMaxDate(String basicTitleCurrency, String quotedTitleCurrency);
 
     /**
@@ -55,29 +55,29 @@ public interface CurrencyRepository extends CassandraRepository<Currency, Long> 
      * @param dateBefore
      * @param basicTitleCurrency
      * @param quotedTitleCurrency
-     * @see AllowFiltering
+     * @see Query
      * @return Set Currency object
      */
-    @AllowFiltering
+    @Query(value = "SELECT * FROM currency  " +
+            "WHERE date >= ?1 and date <= ?2 and basic_Title_Currency = ?3 and quoted_Title_Currency = ?4",
+            nativeQuery = true)
     TreeSet<Currency> findByDateGreaterThanEqualAndDateLessThanEqualAndBasicTitleCurrencyAndQuotedTitleCurrency(
             String dateAfter, String dateBefore, String basicTitleCurrency, String quotedTitleCurrency);
 
     /**
      * Searching min id in DB
      * @see Query
-     * @return Long
+     * @return min id
      */
-    @Query("select MIN(id) FROM currency ALLOW FILTERING")
+    @Query(value = "select MIN(id) FROM currency", nativeQuery = true)
     Long findMinId();
 
     /**
      * Delete Currency in DB by:
      * @param id
      * @see Transactional
-     * @see Query
      */
     @Transactional
-    @Query("DELETE FROM currency WHERE id = ?0")
-    void delete(Long id);
+    void deleteById(Long id);
 
 }

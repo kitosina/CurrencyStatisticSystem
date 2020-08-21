@@ -6,7 +6,7 @@ import ru.kitosins.sibsutis.currency.entity.Users;
  * UsersService special method for:
  * @see UsersServiceImpl
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  */
 public interface UsersService {
 
