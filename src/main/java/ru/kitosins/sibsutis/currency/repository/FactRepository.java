@@ -2,7 +2,6 @@ package ru.kitosins.sibsutis.currency.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.kitosins.sibsutis.currency.entity.Fact;
 

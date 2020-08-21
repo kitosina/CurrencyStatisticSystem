@@ -3,10 +3,7 @@ package ru.kitosins.sibsutis.currency.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.bind.annotation.*;
 import ru.kitosins.sibsutis.currency.service.CurrencyServiceImpl;
 import ru.kitosins.sibsutis.currency.service.UsersServiceImpl;
