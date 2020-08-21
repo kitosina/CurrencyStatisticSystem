@@ -3,42 +3,34 @@ package ru.kitosins.sibsutis.currency.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.cassandra.core.cql.Ordering;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.util.List;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Users representation class
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Data
  * @see AllArgsConstructor
  * @see NoArgsConstructor
  * @see Table
+ * @see Entity
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("users")
+@Entity
+@Table(name = "users")
 public class Users {
 
     /**
      * An id field for DB identification
      * @see Id
-     * @see PrimaryKeyColumn
+     * @see GeneratedValue
      */
     @Id
-    @PrimaryKeyColumn(
-            name = "id",
-            ordinal = 2,
-            type = PrimaryKeyType.PARTITIONED,
-            ordering = Ordering.DESCENDING
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -63,10 +55,19 @@ public class Users {
     private String email;
 
     /**
-     * roles field for DB
-     * @see Column
+     * User role field for using in authorities in Spring security
+     * creates and wires with User_role field.
+     * user identifies by user_id field in table
+     *
+     * @see CollectionTable
+     * @see Role
+     * @see Enumerated
+     * @see JoinColumn
+     * @see ElementCollection
      */
-    @Column
-    private List<String> roles;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
 }

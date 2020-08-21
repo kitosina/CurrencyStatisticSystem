@@ -3,43 +3,35 @@ package ru.kitosins.sibsutis.currency.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.cassandra.core.cql.Ordering;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Currency representation class
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Data
  * @see AllArgsConstructor
  * @see NoArgsConstructor
  * @see Table
+ * @see Entity
  * @see Comparable
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("currency")
+@Entity
+@Table(name = "currency")
 public class Currency implements Comparable<Currency>{
 
     /**
      * An id field for DB identification
      * @see Id
-     * @see PrimaryKeyColumn
+     * @see GeneratedValue
      */
     @Id
-    @PrimaryKeyColumn(
-            name = "id",
-            ordinal = 2,
-            type = PrimaryKeyType.PARTITIONED,
-            ordering = Ordering.DESCENDING
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -78,10 +70,7 @@ public class Currency implements Comparable<Currency>{
      */
     @Override
     public int compareTo(Currency currency) {
-            return date.compareTo(currency.getDate());
+        return date.compareTo(currency.getDate());
     }
 
 }
-
-
-

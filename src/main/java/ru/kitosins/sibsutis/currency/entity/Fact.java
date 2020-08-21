@@ -3,42 +3,37 @@ package ru.kitosins.sibsutis.currency.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.cassandra.core.cql.Ordering;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.util.List;
+import javax.persistence.*;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  * Fact representation class
  * @author kitosina
- * @version 0.1
+ * @version 0.2
  * @see Data
  * @see AllArgsConstructor
  * @see NoArgsConstructor
  * @see Table
+ * @see Entity
+ * @see Comparable
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("fact")
+@Entity
+@Table(name = "fact")
 public class Fact {
 
     /**
      * An id field for DB identification
      * @see Id
-     * @see PrimaryKeyColumn
+     * @see GeneratedValue
      */
     @Id
-    @PrimaryKeyColumn(
-            name = "id",
-            ordinal = 2,
-            type = PrimaryKeyType.PARTITIONED,
-            ordering = Ordering.DESCENDING
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -53,6 +48,6 @@ public class Fact {
      * @see Column
      */
     @Column
-    private List<String> listFact;
+    private String fact;
 
 }
