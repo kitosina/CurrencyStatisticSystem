@@ -24,54 +24,62 @@ app.controller("ACTUAL_CONTROLLER",function($scope, $http, $filter){
 
         update1().then(function () {
             update2().then(function () {
-                update3()
+                update3().then(function () {
+                    gettingDateValue().then(function () {
+                        gettingValue()
+                    })
+                })
             })
-        })
+        });
+    }
 
-        var urlRequest1 = $scope.urlActualValue + $scope.coupleCurrency[0];
-        $http({
-            url: urlRequest1,
-            method: "GET"
-        }).then(function (response) {
-            $scope.outputValue.push(response.data)
-            var urlRequest2 = $scope.urlActualValue + $scope.coupleCurrency[1];
+        gettingValue = async function () {
+            var urlRequest1 = $scope.urlActualValue + $scope.coupleCurrency[0];
             $http({
-                url: urlRequest2,
+                url: urlRequest1,
                 method: "GET"
             }).then(function (response) {
                 $scope.outputValue.push(response.data)
-                var urlRequest3 = $scope.urlActualValue + $scope.coupleCurrency[2];
+                var urlRequest2 = $scope.urlActualValue + $scope.coupleCurrency[1];
                 $http({
-                    url: urlRequest3,
+                    url: urlRequest2,
                     method: "GET"
                 }).then(function (response) {
                     $scope.outputValue.push(response.data)
+                    var urlRequest3 = $scope.urlActualValue + $scope.coupleCurrency[2];
+                    $http({
+                        url: urlRequest3,
+                        method: "GET"
+                    }).then(function (response) {
+                        $scope.outputValue.push(response.data)
+                    })
                 })
             })
-        })
+        }
 
-        var urlRequestDate1 = $scope.urlActualDate + $scope.coupleCurrency[0];
-        $http({
-            url: urlRequestDate1,
-            method: "GET"
-        }).then(function (response) {
-            $scope.outputDate.push(response.data.slice(0, 10))
-            var urlRequestDate2 = $scope.urlActualDate + $scope.coupleCurrency[1];
+        gettingDateValue = async function () {
+            var urlRequestDate1 = $scope.urlActualDate + $scope.coupleCurrency[0];
             $http({
-                url: urlRequestDate2,
+                url: urlRequestDate1,
                 method: "GET"
             }).then(function (response) {
                 $scope.outputDate.push(response.data.slice(0, 10))
-                var urlRequestDate3 = $scope.urlActualDate + $scope.coupleCurrency[2];
+                var urlRequestDate2 = $scope.urlActualDate + $scope.coupleCurrency[1];
                 $http({
-                    url: urlRequestDate3,
+                    url: urlRequestDate2,
                     method: "GET"
                 }).then(function (response) {
                     $scope.outputDate.push(response.data.slice(0, 10))
+                    var urlRequestDate3 = $scope.urlActualDate + $scope.coupleCurrency[2];
+                    $http({
+                        url: urlRequestDate3,
+                        method: "GET"
+                    }).then(function (response) {
+                        $scope.outputDate.push(response.data.slice(0, 10))
+                    })
                 })
             })
-        })
-    }
+        }
 
     update1 = async function () {
         return $http({

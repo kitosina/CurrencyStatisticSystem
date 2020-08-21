@@ -4,6 +4,7 @@ app.controller("ADMIN_CONTROLLER",function($scope, $http){
 
     $scope.username = "";
     $scope.url = "/administration"
+    var flagClickOfClearDb = true;
 
     $scope.usersObject = [{
         id: null ,
@@ -19,7 +20,6 @@ app.controller("ADMIN_CONTROLLER",function($scope, $http){
         var urlDelete = $scope.url + "/delete/by/";
         if ($scope.username !== "") {
             var urlRequest = urlDelete + $scope.username;
-            console.log(urlRequest);
             $http({
                 url: urlRequest,
                 method: "DELETE"
@@ -36,23 +36,25 @@ app.controller("ADMIN_CONTROLLER",function($scope, $http){
                 url: urlRequest,
                 method: "GET"
             }).then(function (response) {
-                console.log(response);
                 $scope.usersObject = response.data;
-                console.log($scope.usersObject)
             })
     }
 
-    $scope.clearDb = function () {
+    clear = function () {
+        flagClickOfClearDb = false;
         if($scope.codeClearDb === "Yes") {
-            $scope.delete = async function () {
                 $http({
                     url: '/administration/clear',
-                    method: 'DELETE',
+                    method: 'DELETE'
                 }).then(function (response) {
+                    flagClickOfClearDb = true;
                     console.log("Delete")
                 })
-            }
-        } else alert("Not Operation")
+            } else alert("Not Operation")
+    }
+
+    $scope.clearDb = function () {
+        if(flagClickOfClearDb) clear();
     }
 
 });

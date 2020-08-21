@@ -14,16 +14,19 @@ app.controller("DATE_CONTROLLER",function($scope, $http, $filter){
     $scope.date = $filter('date')($scope.date, 'yyyy-MM-dd');
 
     $scope.analysisGlobalData = function () {
-        console.log('call');
             update1().then(function () {
                 update2().then(function () {
-                    update3()
+                    update3().then(function () {
+                        gettingData()
+                    })
                 })
             })
+    }
+
+    gettingData = async function() {
         if (($scope.paramRequest.dateAfter !== "") && ($scope.paramRequest.dateBefore !== "") && ($scope.paramRequest.currencyCouple !== "")) {
             var updateDateAfter = validateDate($scope.paramRequest.dateAfter);
             var updateDateBefore = validateDate($scope.paramRequest.dateBefore)
-            // console.log(updateDateAfter);
             var urlRequest = $scope.url + updateDateAfter + "/" + updateDateBefore + "/" + $scope.paramRequest.currencyCouple;
             $http({
                 url: urlRequest,
@@ -33,8 +36,6 @@ app.controller("DATE_CONTROLLER",function($scope, $http, $filter){
             })
         } else alert("Please input currency!");
     }
-
-
 
     update1 = async function () {
         return $http({
