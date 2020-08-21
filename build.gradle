@@ -31,6 +31,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	// https://mvnrepository.com/artifact/postgresql/postgresql
+	compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+
 	//Spring Security
 	compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.3.2.RELEASE'
 	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.3.2.RELEASE'
