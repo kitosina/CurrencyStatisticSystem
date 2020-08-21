@@ -1,0 +1,15 @@
+INSERT INTO fact (id, name_currency, fact) VALUES (1, 'USD', '1) The US dollar is the official currency not only in the States');
+INSERT INTO fact (id, name_currency, fact) VALUES (2, 'USD', '2) Slang word <<bucks>> comes from the name of the skin of a deer');
+INSERT INTO fact (id, name_currency, fact) VALUES (3, 'USD', '3) The word <<Dollar>> comes from the German <<Taler>>');
+INSERT INTO fact (id, name_currency, fact) VALUES (4, 'USD', '4) The most common banknote - $ 1');
+INSERT INTO fact (id, name_currency, fact) VALUES (5, 'USD', '5) Materials for the production of dollars - linen and cotton');
+INSERT INTO fact (id, name_currency, fact) VALUES (6, 'EUR', '1) The euro was originally virtual');
+INSERT INTO fact (id, name_currency, fact) VALUES (7, 'EUR', '2) Euro is not accepted in all EU countries');
+INSERT INTO fact (id, name_currency, fact) VALUES (8, 'EUR', '3) A 500 euro bill may not be accepted');
+INSERT INTO fact (id, name_currency, fact) VALUES (9, 'EUR', '4) There is a 0 euro note');
+INSERT INTO fact (id, name_currency, fact) VALUES (10, 'EUR', '5) A 2 euro coin is much more expensive');
+INSERT INTO fact (id, name_currency, fact) VALUES (11, 'RUB', '1) The modern Russian ruble, unlike the Soviet one, does not have a gold equivalent');
+INSERT INTO fact (id, name_currency, fact) VALUES (12, 'RUB', '2) Paper Russian rubles, withdrawn from circulation, including due to dilapidation, are used as a recyclable material for the production of roofing material');
+INSERT INTO fact (id, name_currency, fact) VALUES (13, 'RUB', '3) The historical Russian ruble was a 200-gram piece of silver, chopped off from a 2-kilogram ingot, called the hryvnia');
+INSERT INTO fact (id, name_currency, fact) VALUES (14, 'RUB', '4) Despite the fact that ten Russian rubles are used to refer to ten Russian rubles, initially this name was borne by a coin with a face value of three rubles');
+INSERT INTO fact (id, name_currency, fact) VALUES (15, 'RUB', '5) In the early 60s, the ruble was almost equal in value to a gram of gold, and was much more expensive than the US dollar');

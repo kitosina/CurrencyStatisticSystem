@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Fact</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+
+<link rel="stylesheet" href="style/fact.css">
+<script src="script/fact.js" type="text/javascript"></script>
+
+<link rel="SHORTCUT ICON" href="image/icon.ico" type="image/ico">
+</head>
+<body ng-app="FACTS" ng-controller="FACT_CONTROLLER">
+
+<!-- Шапка -->
+<header class="header">
+	<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-primary">
+  		<a id="logo" class="col-md-4 navbar-brand" href="#">C-Statistics</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    		<span class="navbar-toggler-icon"></span>
+  		</button>
+	  <div class="col-md-7 collapse navbar-collapse" id="navbarText">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="/">Home</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/date_statistics">Date statistics</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/actual_statistics">Actual statistics</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/converter">Converter</a>
+	      </li>
+	       <li class="nav-item active">
+	        <a class="nav-link" href="/facts">Facts</a>
+	      </li>
+	    </ul>
+	    <span id="login_button" class="navbar-text">
+	        <b><a href="/login" th:if="${#httpServletRequest.remoteUser == null}">Login</a></b>
+			<b><a id="user_name" th:if="${#httpServletRequest.remoteUser != null}">Your name: [[${#httpServletRequest.remoteUser}]]
+				<a id="logout" href="/logout">logout</a>
+			</a></b>
+	    </span>
+	  </div>
+	</nav>
+</header>
+
+<!-- Содержание -->
+<div class="container-fluid main">
+
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<select class="custom-select" id="inputGroupSelect02" ng-model="nameCurrency">
+                <option disabled selected value="">Choose currency</option>
+			    <option value="EUR">EUR</option>
+			    <option value="USD">USD</option>
+			    <option value="RUB">RUB</option>
+			</select>
+			<div class="card-body bg-success text-white">
+		        <h5 class="card-title">All Facts</h5>
+		        <p ng-repeat="facts in listFact">{{facts.fact}}<br></p>
+		    </div>
+		</div>
+		<div class="col-md-3">
+
+			<button ng-click="selectAllFact()" type="button" class="btn btn-success">Success</button>
+		</div>
+	</div>
+</div>
+
+<!-- Подвал -->
+<footer class="container-fluid footer">
+	<div class="row">
+		<div class="col-md-3">
+
+		</div>
+		<div class="col-md-7">
+			<h4 style="color: #FFFFFF; top: 20px; position: relative;">Java Project<br>KITOSINA</h4>
+		</div>
+		<div class="col-md-2">
+			<a href="https://exchangeratesapi.io/"><img id="img_footer" class="img-fluid" src="image/API.png"></a>
+			<a href="https://github.com/kitosina/CurrencyStaticSystem"><img id="img_footer2" class="img-fluid" src="image/github.png"></a>
+		</div>
+	</div>
+</footer>
+
+
+</body>
+</html>

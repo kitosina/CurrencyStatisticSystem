@@ -19,13 +19,23 @@ repositories {
 }
 
 dependencies {
-	compile group: 'com.datastax.cassandra', name: 'cassandra-driver-core', version: '3.9.0'
-	compile group: 'org.springframework.data', name: 'spring-data-cassandra', version: '3.0.1.RELEASE'
+	//Spring Data
+	compile "mysql:mysql-connector-java:8.0.17"
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//Spring Framework
 	compile group: 'org.springframework', name: 'spring-core', version: '5.2.7.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.3.1.RELEASE'
 
+	//Spring MVC
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//Spring Security
+	compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.3.2.RELEASE'
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.3.2.RELEASE'
+	compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.3.2.RELEASE'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
