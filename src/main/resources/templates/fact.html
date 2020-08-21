@@ -68,12 +68,12 @@
 			</select>
 			<div class="card-body bg-success text-white">
 		        <h5 class="card-title">All Facts</h5>
-		        <p ng-repeat="facts in listFact">{{facts}}<br></p>
+		        <p ng-repeat="facts in listFact">{{facts.fact}}<br></p>
 		    </div>
 		</div>
 		<div class="col-md-3">
 
-			<button ng-click="selectCurrency()" type="button" class="btn btn-success">Success</button>
+			<button ng-click="selectAllFact()" type="button" class="btn btn-success">Success</button>
 		</div>
 	</div>
 </div>
