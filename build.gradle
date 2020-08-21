@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
 	//Spring Data
-	compile "mysql:mysql-connector-java:8.0.17"
+//	compile "mysql:mysql-connector-java:8.0.17"
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	//Spring Framework
