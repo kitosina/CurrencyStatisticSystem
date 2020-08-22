@@ -29,17 +29,17 @@
 ### [Exchangeratesapi.io](https://exchangeratesapi.io/)
 ***
 ### Project Download
-     `git clone https://github.com/kitosina/CurrencyStatisticSystem.git`
+`git clone https://github.com/kitosina/CurrencyStatisticSystem.git`
 ***
 ### Program assembly
-     `sudo gradle build`
+`sudo gradle build`
 ***
 ### Program launch
-     `gradle bootRun`
+`gradle bootRun`
 ##### Gradle version 4.4.1 and higher
 ***
 ### Generate Documentation
-     `gradle javadoc`
+`gradle javadoc`  `
 ***
 ### The project was made by:
 ##### Frontend and Backend: [kitosina](https://github.com/kitosina)
