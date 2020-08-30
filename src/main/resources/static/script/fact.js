@@ -1,6 +1,6 @@
 var app = angular.module("FACTS",[]);
 
-app.controller("FACT_CONTROLLER",function($scope, $http, $filter){
+app.controller("FACT_CONTROLLER",function($scope, $https, $filter){
 
     $scope.nameCurrency = "";
     $scope.listFact = [];
@@ -8,7 +8,7 @@ app.controller("FACT_CONTROLLER",function($scope, $http, $filter){
 
     $scope.selectAllFact = async function () {
         var urlRequest = $scope.url;
-        $http({
+        $https({
             url: urlRequest,
             method: "GET"
         }).then(function (response) {
@@ -36,7 +36,7 @@ app.controller("FACT_CONTROLLER",function($scope, $http, $filter){
     loadFacts = async function () {
             alert("loading facts in DB")
             var urlRequest = $scope.url + "/" + "load";
-            $http({
+            $https({
                 url: urlRequest,
                 method: "GET",
             }).then(function (response) {
