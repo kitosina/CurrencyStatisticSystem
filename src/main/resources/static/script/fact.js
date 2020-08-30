@@ -4,7 +4,7 @@ app.controller("FACT_CONTROLLER",function($scope, $http, $filter){
 
     $scope.nameCurrency = "";
     $scope.listFact = [];
-    $scope.url = "http://localhost:8098/fact";
+    $scope.url = "/fact";
 
     $scope.selectAllFact = async function () {
         var urlRequest = $scope.url;
