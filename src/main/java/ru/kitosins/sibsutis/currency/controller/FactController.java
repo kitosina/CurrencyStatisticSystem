@@ -23,7 +23,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/fact")
 public class FactController {
-
     /**
      * factService for repository interaction
      */
