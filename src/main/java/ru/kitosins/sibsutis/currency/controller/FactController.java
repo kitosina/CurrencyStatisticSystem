@@ -55,7 +55,7 @@ public class FactController {
      * @see GetMapping
      * @return List Fact in ResponseEntity
      */
-    @GetMapping
+    @GetMapping("/fact")
     public ResponseEntity findAll() {
         log.info("Output all facts");
         return ResponseEntity.ok(factService.findAll());
