@@ -10,4 +10,4 @@ deploy:
   api_key:
     secure: 34b8d5a6-fb32-412f-91e7-842d4389811a
   strategy: api
-  app: currencyy
+  app: currency
